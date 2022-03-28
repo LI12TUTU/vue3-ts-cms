@@ -1,10 +1,12 @@
 import type { App } from "vue"
-import { User, Cellphone } from "@element-plus/icons-vue"
-
-const icons = [User, Cellphone]
+import * as Elicons from "@element-plus/icons-vue"
+import isValidKey from "@/utils/typeofKey"
 
 export default function (app: App): void {
-  for (const icon of icons) {
-    app.component(icon.name, icon)
+  for (const key in Elicons) {
+    if (isValidKey(key, Elicons)) {
+      const icon: any = Elicons[key]
+      app.component(icon.name, icon)
+    }
   }
 }

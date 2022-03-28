@@ -6,6 +6,9 @@ import { ElLoading } from "element-plus"
 import { LoadingInstance } from "element-plus/es/components/loading/src/loading"
 import "element-plus/theme-chalk/el-loading.css"
 
+import { localCache } from "@/utils/cache"
+import { TOKEN_KEY } from "@/constants/storage-key-const"
+
 const DEFAULT_LOADING = true
 
 class RyRequest {
@@ -44,6 +47,11 @@ class RyRequest {
           })
         }
 
+        const token = localCache.getItem(TOKEN_KEY)
+        if (token) {
+          config.headers!.Authorization = `Bearer ${token}`
+        }
+
         return config
       },
       (err) => {
@@ -53,7 +61,7 @@ class RyRequest {
 
     this.instance.interceptors.response.use(
       (res) => {
-        const data = res.data
+        const data = res.data.data
 
         this.loading?.close()
 
@@ -81,9 +89,9 @@ class RyRequest {
         config = config.interceptors.requestInterceptor(config)
       }
 
-      if (config.showLoading === false) {
-        this.showLoading = config.showLoading
-      }
+      // if (config.showLoading === false) {
+      //   this.showLoading = config.showLoading
+      // }
 
       this.instance
         .request<any, T>(config)
@@ -91,29 +99,29 @@ class RyRequest {
           if (config.interceptors?.responseInterceptor) {
             res = config.interceptors.responseInterceptor(res)
           }
-          this.showLoading = DEFAULT_LOADING
+          // this.showLoading = DEFAULT_LOADING
           resolve(res)
         })
         .catch((err) => {
-          this.showLoading = DEFAULT_LOADING
+          // this.showLoading = DEFAULT_LOADING
           reject(err)
         })
     })
   }
 
-  get<T>(config: RyRequestConfig<T>): Promise<T> {
+  get<T = any>(config: RyRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: "GET" })
   }
 
-  post<T>(config: RyRequestConfig<T>): Promise<T> {
+  post<T = any>(config: RyRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: "POST" })
   }
 
-  delete<T>(config: RyRequestConfig<T>): Promise<T> {
+  delete<T = any>(config: RyRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: "DELETE" })
   }
 
-  patch<T>(config: RyRequestConfig<T>): Promise<T> {
+  patch<T = any>(config: RyRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: "PATCH" })
   }
 }
