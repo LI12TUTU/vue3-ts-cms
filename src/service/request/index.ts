@@ -7,9 +7,7 @@ import { LoadingInstance } from "element-plus/es/components/loading/src/loading"
 import "element-plus/theme-chalk/el-loading.css"
 
 import { localCache } from "@/utils/cache"
-import { TOKEN_KEY } from "@/constants/storage-key-const"
-
-const DEFAULT_LOADING = true
+import { TOKEN_KEY } from "@/constants/storage-key"
 
 class RyRequest {
   instance: AxiosInstance
@@ -19,7 +17,7 @@ class RyRequest {
 
   constructor(config: RyRequestConfig) {
     this.instance = axios.create(config)
-    this.showLoading = config.showLoading ?? DEFAULT_LOADING
+    this.showLoading = config.showLoading ?? true
     this.interceptors = config.interceptors
     this.interceptor()
   }
@@ -65,18 +63,20 @@ class RyRequest {
 
         this.loading?.close()
 
-        if (data.returnCode === "-1001") {
-          console.log("请求失败")
-        } else {
-          return data
-        }
+        return data
+
+        // if (data.returnCode === "-1001") {
+        //   console.log("请求失败")
+        // } else {
+        //   return data
+        // }
       },
       (err) => {
         this.loading?.close()
 
-        if (err.response.status === "404") {
-          console.log("404")
-        }
+        // if (err.response.status === "404") {
+        //   console.log("404")
+        // }
         return err
       }
     )
@@ -89,9 +89,8 @@ class RyRequest {
         config = config.interceptors.requestInterceptor(config)
       }
 
-      // if (config.showLoading === false) {
-      //   this.showLoading = config.showLoading
-      // }
+      const DEFAULT_LOADING = this.showLoading
+      this.showLoading = config.showLoading ?? DEFAULT_LOADING
 
       this.instance
         .request<any, T>(config)
@@ -99,11 +98,15 @@ class RyRequest {
           if (config.interceptors?.responseInterceptor) {
             res = config.interceptors.responseInterceptor(res)
           }
-          // this.showLoading = DEFAULT_LOADING
+          if (this.showLoading !== DEFAULT_LOADING) {
+            this.showLoading = DEFAULT_LOADING
+          }
           resolve(res)
         })
         .catch((err) => {
-          // this.showLoading = DEFAULT_LOADING
+          if (this.showLoading !== DEFAULT_LOADING) {
+            this.showLoading = DEFAULT_LOADING
+          }
           reject(err)
         })
     })

@@ -21,7 +21,7 @@ import { ElForm } from "element-plus"
 import { useStore } from "vuex"
 import rules from "../config/account-config"
 import { localCache } from "@/utils/cache"
-import { NAME_KEY, PASSWORD_KEY } from "@/constants/storage-key-const"
+import { NAME_KEY, PASSWORD_KEY } from "@/constants/storage-key"
 
 export default defineComponent({
   setup() {

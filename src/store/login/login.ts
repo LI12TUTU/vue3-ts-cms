@@ -20,7 +20,7 @@ import {
   TOKEN_KEY,
   USER_INFO_KEY,
   USER_MENUS_KEY
-} from "@/constants/storage-key-const"
+} from "@/constants/storage-key"
 
 import router from "@/router"
 import { mapMenusToRoutes } from "@/utils/map-menus"

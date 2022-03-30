@@ -6,7 +6,7 @@
     </div>
     <el-menu
       class="el-menu-vertical"
-      default-active="2"
+      :default-active="defaultIndex"
       :collapse="collapse"
       router
       :background-color="MENU_BG_COLOR"
@@ -49,8 +49,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue"
+import { defineComponent, ref, computed } from "vue"
 import { useStore } from "@/store"
+import { useRoute } from "vue-router"
+import { mapPathToMenu } from "@/utils/map-menus"
 import {
   MENU_BG_COLOR,
   MENU_TEXT_COLOR,
@@ -67,10 +69,15 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const userMenus = computed(() => store.state.login.userMenus)
+    const route = useRoute()
+    const currentPath = route.path
+    const menu = mapPathToMenu(userMenus.value, currentPath)
+    const defaultIndex = ref(menu.id + "")
     const formatIcon = (icon: string) => icon.replace("el-icon-", "")
 
     return {
       userMenus,
+      defaultIndex,
       formatIcon,
       MENU_BG_COLOR,
       MENU_TEXT_COLOR,

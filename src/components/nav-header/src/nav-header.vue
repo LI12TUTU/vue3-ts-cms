@@ -4,7 +4,7 @@
       <component :is="isFold ? 'expand' : 'fold'"></component>
     </el-icon>
     <div class="content">
-      <div>面包屑</div>
+      <my-breadcrumb :breadcrumbs="breadcrumbs" />
       <div class="right">
         <div class="icons">
           <el-icon :size="20" class="icon">
@@ -24,22 +24,38 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
+import { defineComponent, computed } from "vue"
+import { useRoute } from "vue-router"
+import MyBreadcrumb from "@/base-ui/breadcrumb"
 import UserInfo from "./user-info.vue"
+import { isFold, useScreen } from "./hooks/useScreen"
+import { mapPathToBreadcrumbs } from "@/utils/map-menus"
+import { useStore } from "@/store"
 
 export default defineComponent({
   components: {
-    UserInfo
+    UserInfo,
+    MyBreadcrumb
   },
   emits: ["foldChange"],
   setup(props, { emit }) {
-    const isFold = ref(false)
     const handleFoldClick = () => {
       isFold.value = !isFold.value
       emit("foldChange", isFold.value)
     }
+    useScreen(emit)
+
+    const store = useStore()
+    const breadcrumbs = computed(() => {
+      const userMenus = store.state.login.userMenus
+      const route = useRoute()
+      const currentPath = route.path
+      return mapPathToBreadcrumbs(userMenus, currentPath)
+    })
+
     return {
       isFold,
+      breadcrumbs,
       handleFoldClick
     }
   }
@@ -49,6 +65,7 @@ export default defineComponent({
 <style scoped lang="less">
 .nav-header {
   display: flex;
+  align-items: center;
   width: 100%;
   .fold-menu {
     font-size: 25px;
@@ -61,6 +78,10 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .nav-breadcrumb {
+      min-width: 200px;
+    }
 
     .right {
       display: flex;

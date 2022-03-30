@@ -1,22 +1,22 @@
 <template>
   <div class="user">
-    <my-form v-bind="formConfig" />
+    <page-search :searchFormConfig="searchFormConfig"></page-search>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import MyForm from "@/base-ui/form"
-import { formConfig } from "./config/search-config"
+import { searchFormConfig } from "./config/search-config"
+import PageSearch from "@/components/page-search"
 
 export default defineComponent({
   name: "user",
   components: {
-    MyForm
+    PageSearch
   },
   setup() {
     return {
-      formConfig
+      searchFormConfig
     }
   }
 })

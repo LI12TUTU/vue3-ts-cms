@@ -6,11 +6,13 @@ interface optionsType {
 }
 
 export interface IFormItem {
+  field: string
   type: IFormType
   label: string
   rules?: any[]
   placeholder?: string
-  options?: optionsType[]
+  selectOptions?: optionsType[]
+  formItemOptions?: any
   otherOptions?: any
 }
 
