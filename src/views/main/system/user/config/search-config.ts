@@ -23,8 +23,8 @@ export const searchFormConfig: IForm = {
       rules: [],
       placeholder: "请选择运动",
       selectOptions: [
-        { title: "篮球", value: "basketball" },
-        { title: "足球", value: "football" }
+        { label: "篮球", value: "basketball" },
+        { label: "足球", value: "football" }
       ]
     },
     {

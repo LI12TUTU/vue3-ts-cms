@@ -34,8 +34,8 @@
                     v-for="option in item.selectOptions"
                     :key="option.value"
                     :value="option.value"
-                    >{{ option.title }}</el-option
-                  >
+                    :label="option.label"
+                  ></el-option>
                 </el-select>
               </template>
               <template v-else-if="item.type === 'datapicker'">

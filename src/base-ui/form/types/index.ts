@@ -1,7 +1,7 @@
 type IFormType = "input" | "password" | "select" | "datapicker"
 
 interface optionsType {
-  title: string
+  label: string
   value: string
 }
 

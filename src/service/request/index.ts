@@ -82,7 +82,7 @@ class RyRequest {
     )
   }
 
-  request<T>(config: RyRequestConfig<T>): Promise<T> {
+  request<T = any>(config: RyRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       // 单个请求的请求和响应拦截
       if (config.interceptors?.requestInterceptor) {

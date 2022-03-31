@@ -8,11 +8,13 @@
         <el-header class="page-header">
           <nav-header @fold-change="handleFoldChange" />
         </el-header>
-        <el-main class="page-content">
-          <div class="page-info">
-            <router-view></router-view>
-          </div>
-        </el-main>
+        <el-scrollbar>
+          <el-main class="page-content">
+            <div class="page-info">
+              <router-view></router-view>
+            </div>
+          </el-main>
+        </el-scrollbar>
       </el-container>
     </el-container>
   </div>
@@ -42,7 +44,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-@import "@/assets/css/var.less";
 .main {
   position: fixed;
   top: 0;

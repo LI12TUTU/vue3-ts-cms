@@ -6,6 +6,13 @@ const { ElementPlusResolver } = require("unplugin-vue-components/resolvers")
 
 module.exports = defineConfig({
   transpileDependencies: true,
+  css: {
+    loaderOptions: {
+      less: {
+        additionalData: `@import "~@/assets/css/var.less";`
+      }
+    }
+  },
   devServer: {
     proxy: {
       "/api": {

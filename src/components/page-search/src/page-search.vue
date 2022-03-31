@@ -3,7 +3,7 @@
     <my-form v-bind="searchFormConfig" v-model="formData">
       <template #footer>
         <div class="handle-btns">
-          <el-button icon="refresh">重置</el-button>
+          <el-button icon="refresh" type="success">重置</el-button>
           <el-button type="primary" icon="search">搜索</el-button>
         </div>
       </template>

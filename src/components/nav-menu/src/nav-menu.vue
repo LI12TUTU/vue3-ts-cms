@@ -88,7 +88,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-@import "@/assets/css/var.less";
 .nav-menu {
   height: 100%;
   background-color: @page-aside-bgColor;
@@ -142,7 +141,7 @@ export default defineComponent({
   }
 }
 
-.el-menu-vertical:not(.el-menu--collapse) {
+.el-menu-vertical {
   width: 100%;
   height: calc(100% - @page-header-height);
 }
