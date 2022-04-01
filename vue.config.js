@@ -9,7 +9,7 @@ module.exports = defineConfig({
   css: {
     loaderOptions: {
       less: {
-        additionalData: `@import "~@/assets/css/var.less";`
+        additionalData: `@import "~@/assets/css/var.less";@import "~@/assets/css/mixin.less";`
       }
     }
   },

@@ -8,13 +8,15 @@
         <el-header class="page-header">
           <nav-header @fold-change="handleFoldChange" />
         </el-header>
-        <el-scrollbar>
-          <el-main class="page-content">
-            <div class="page-info">
-              <router-view></router-view>
-            </div>
-          </el-main>
-        </el-scrollbar>
+        <el-main class="page-content">
+          <div class="page-info">
+            <router-view #default="{ Component }">
+              <keep-alive>
+                <component :is="Component"></component>
+              </keep-alive>
+            </router-view>
+          </div>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -57,8 +59,17 @@ export default defineComponent({
   height: 100%;
 }
 
+// .el-scrollbar {
+//   height: calc(100% - 48px);
+
+//   &:deep(.el-scrollbar__view) {
+//     height: 100%;
+//   }
+// }
+
 .page-content {
   height: calc(100% - 48px);
+  .scrollbar();
   .page-info {
     background-color: @page-content-info-bgColor;
     border-radius: 5px;

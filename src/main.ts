@@ -8,6 +8,8 @@ import { setupStore } from "./store"
 import "normalize.css"
 import "./assets/css/index.less"
 
+import "default-passive-events"
+
 const app = createApp(App)
 
 app.use(globalRegister)

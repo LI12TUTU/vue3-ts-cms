@@ -6,32 +6,45 @@ export const searchFormConfig: IForm = {
       field: "name",
       type: "input",
       label: "用户名",
-      rules: [],
       placeholder: "请输入用户名"
     },
     {
-      field: "password",
-      type: "password",
-      label: "密码",
-      rules: [],
-      placeholder: "请输入密码"
+      field: "realname",
+      type: "input",
+      label: "真实姓名",
+      placeholder: "请输入真实姓名"
     },
     {
-      field: "sport",
+      field: "enable",
       type: "select",
-      label: "运动",
-      rules: [],
-      placeholder: "请选择运动",
+      label: "用户状态",
+      placeholder: "请选择用户状态",
       selectOptions: [
-        { label: "篮球", value: "basketball" },
-        { label: "足球", value: "football" }
+        { label: "启用", value: 1 },
+        { label: "禁用", value: 0 }
       ]
     },
     {
-      field: "time",
+      field: "cellphone",
+      type: "input",
+      label: "电话号码",
+      placeholder: "请输入电话号码"
+    },
+    {
+      field: "createAt",
       type: "datapicker",
-      label: "时间",
-      rules: [],
+      label: "创建时间",
+      otherOptions: {
+        startPlaceholder: "开始时间",
+        endPlaceholder: "结束时间",
+        type: "daterange",
+        unlinkPanels: true
+      }
+    },
+    {
+      field: "updateAt",
+      type: "datapicker",
+      label: "更新时间",
       otherOptions: {
         startPlaceholder: "开始时间",
         endPlaceholder: "结束时间",

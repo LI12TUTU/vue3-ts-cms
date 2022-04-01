@@ -26,11 +26,13 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue"
 import { useRoute } from "vue-router"
+import { useStore } from "@/store"
+
 import MyBreadcrumb from "@/base-ui/breadcrumb"
 import UserInfo from "./user-info.vue"
+
 import { isFold, useScreen } from "./hooks/useScreen"
 import { mapPathToBreadcrumbs } from "@/utils/map-menus"
-import { useStore } from "@/store"
 
 export default defineComponent({
   components: {

@@ -40,14 +40,11 @@
     <div class="my-table-footer">
       <slot name="footer">
         <el-pagination
-          v-model:currentPage="currentPage4"
-          v-model:page-size="pageSize4"
-          :page-sizes="[100, 200, 300, 400]"
-          :small="small"
-          :disabled="disabled"
-          :background="background"
+          :currentPage="page.currentPage"
+          :page-size="page.pageSize"
+          :page-sizes="[10, 20, 30]"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="listCount"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
         />
@@ -69,6 +66,10 @@ export default defineComponent({
       type: Array,
       required: true
     },
+    listCount: {
+      type: Number,
+      default: 0
+    },
     propsList: {
       type: Array as PropType<any[]>,
       required: true
@@ -88,15 +89,32 @@ export default defineComponent({
           border: true
         }
       }
+    },
+    page: {
+      type: Object,
+      default: () => ({
+        currentPage: 0,
+        pageSize: 10
+      })
     }
   },
-  emits: ["selectionChange"],
+  emits: ["selectionChange", "update:page"],
   setup(props, { emit }) {
     const handleSelectionChange = (value: any) => {
       emit("selectionChange", value)
     }
+
+    const handleCurrentChange = (currentPage: number) => {
+      emit("update:page", { ...props.page, currentPage })
+    }
+
+    const handleSizeChange = (pageSize: number) => {
+      emit("update:page", { ...props.page, pageSize })
+    }
     return {
-      handleSelectionChange
+      handleSelectionChange,
+      handleCurrentChange,
+      handleSizeChange
     }
   }
 })

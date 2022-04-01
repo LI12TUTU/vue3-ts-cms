@@ -2,7 +2,7 @@ type IFormType = "input" | "password" | "select" | "datapicker"
 
 interface optionsType {
   label: string
-  value: string
+  value: any
 }
 
 export interface IFormItem {
@@ -21,4 +21,8 @@ export interface IForm {
   labelWidth?: string
   colLayout?: any
   itemStyle?: any
+}
+
+export interface IModelValue {
+  [key: string]: string
 }

@@ -20,15 +20,17 @@
                   :placeholder="item.placeholder ?? ''"
                   :show-password="item.type === 'password'"
                   v-bind="item.otherOptions"
-                  v-model="formData[`${item.field}`]"
+                  :model-value="modelValue[item.field]"
+                  @update:model-value="handleValueChange($event, item.field)"
                 />
               </template>
               <template v-else-if="item.type === 'select'">
                 <el-select
                   :placeholder="item.placeholder"
-                  v-bind="item.otherOptions"
-                  v-model="formData[`${item.field}`]"
                   style="width: 100%"
+                  v-bind="item.otherOptions"
+                  :model-value="modelValue[item.field]"
+                  @update:model-value="handleValueChange($event, item.field)"
                 >
                   <el-option
                     v-for="option in item.selectOptions"
@@ -41,8 +43,9 @@
               <template v-else-if="item.type === 'datapicker'">
                 <el-date-picker
                   v-bind="item.otherOptions"
-                  v-model="formData[`${item.field}`]"
                   style="width: 100%"
+                  :model-value="modelValue[item.field]"
+                  @update:model-value="handleValueChange($event, item.field)"
                 ></el-date-picker>
               </template>
             </el-form-item>
@@ -57,13 +60,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, PropType } from "vue"
-import { IFormItem } from "../types"
+import { defineComponent, PropType } from "vue"
+import { IFormItem, IModelValue } from "../types"
 
 export default defineComponent({
   props: {
     modelValue: {
-      type: Object
+      type: Object as PropType<IModelValue>,
+      required: true
     },
     formOptions: {
       type: Object,
@@ -94,20 +98,30 @@ export default defineComponent({
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
-    const formData = ref({ ...props.modelValue })
+    //#region
+    // const formData = ref({ ...props.modelValue })
 
-    watch(
-      formData,
-      (newValue) => {
-        emit("update:modelValue", newValue)
-      },
-      {
-        deep: true
-      }
-    )
+    // watch(
+    //   formData,
+    //   (newValue) => {
+    //     // 对modelValue浅拷贝后得到的新对象设置回去，因此两个对象实际上指向的都是这个newValue(formData.value),
+    //     // 因此修改内部属性会生效
+    //     emit("update:modelValue", newValue)
+    //     console.log(props.modelValue === formData.value)
+    //   },
+    //   {
+    //     deep: true
+    //   }
+    // )
+    //#endregion
+
+    const handleValueChange = (value: string, field: string) => {
+      console.log(value, field)
+      emit("update:modelValue", { ...props.modelValue, [field]: value })
+    }
 
     return {
-      formData
+      handleValueChange
     }
   }
 })
