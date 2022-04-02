@@ -116,7 +116,6 @@ export default defineComponent({
     //#endregion
 
     const handleValueChange = (value: string, field: string) => {
-      console.log(value, field)
       emit("update:modelValue", { ...props.modelValue, [field]: value })
     }
 

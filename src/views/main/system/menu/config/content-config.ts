@@ -1,16 +1,21 @@
 import type { ITable } from "@/base-ui/table"
 
 export const contentTableConfig: ITable = {
-  title: "角色列表",
+  title: "菜单列表",
   propsList: [
     {
       prop: "name",
-      label: "角色名",
+      label: "菜单名称",
       minWidth: "100"
     },
     {
-      prop: "intro",
-      label: "权限介绍",
+      prop: "type",
+      label: "菜单类型",
+      minWidth: "100"
+    },
+    {
+      prop: "premission",
+      label: "按钮权限",
       minWidth: "100"
     },
     {
@@ -31,6 +36,12 @@ export const contentTableConfig: ITable = {
       slotName: "handler"
     }
   ],
-  showColumnIndex: true,
-  showSelectColumn: true
+  tableOptions: {
+    border: true,
+    rowKey: "id",
+    treeProp: {
+      children: "children"
+    }
+  },
+  showFooter: false
 }

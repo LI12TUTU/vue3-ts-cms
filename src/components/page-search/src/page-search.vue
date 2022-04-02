@@ -16,8 +16,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
+import { defineComponent, PropType, ref } from "vue"
 import MyForm from "@/base-ui/form"
+import { IForm } from "@/base-ui/form"
 
 export default defineComponent({
   components: {
@@ -25,7 +26,7 @@ export default defineComponent({
   },
   props: {
     searchFormConfig: {
-      type: Object,
+      type: Object as PropType<IForm>,
       required: true
     }
   },

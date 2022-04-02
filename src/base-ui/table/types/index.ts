@@ -3,5 +3,6 @@ export interface ITable {
   propsList: any[]
   showColumnIndex?: boolean
   showSelectColumn?: boolean
+  showFooter?: boolean
   tableOptions?: any
 }

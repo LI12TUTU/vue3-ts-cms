@@ -5,10 +5,9 @@ import store from "./store"
 import { globalRegister } from "./global"
 import { setupStore } from "./store"
 
+import "element-plus/theme-chalk/el-message.css"
 import "normalize.css"
 import "./assets/css/index.less"
-
-import "default-passive-events"
 
 const app = createApp(App)
 

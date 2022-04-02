@@ -2,7 +2,7 @@ import axios from "axios"
 import type { AxiosInstance } from "axios"
 import type { RyRequestInterceptors, RyRequestConfig } from "./type"
 
-import { ElLoading } from "element-plus"
+import { ElLoading, ElMessage } from "element-plus"
 import { LoadingInstance } from "element-plus/es/components/loading/src/loading"
 import "element-plus/theme-chalk/el-loading.css"
 
@@ -59,24 +59,19 @@ class RyRequest {
 
     this.instance.interceptors.response.use(
       (res) => {
-        const data = res.data.data
+        const data = res.data
 
         this.loading?.close()
 
-        return data
-
-        // if (data.returnCode === "-1001") {
-        //   console.log("请求失败")
-        // } else {
-        //   return data
-        // }
+        if (data.code !== 0) {
+          return data
+        } else {
+          return data.data
+        }
       },
       (err) => {
         this.loading?.close()
-
-        // if (err.response.status === "404") {
-        //   console.log("404")
-        // }
+        ElMessage.error("请求失败")
         return err
       }
     )

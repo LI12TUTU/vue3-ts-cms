@@ -23,7 +23,7 @@ import {
 } from "@/constants/storage-key"
 
 import router from "@/router"
-import { mapMenusToRoutes } from "@/utils/map-menus"
+import { mapMenusToPermissions, mapMenusToRoutes } from "@/utils/map-menus"
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -31,7 +31,8 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: "",
       userInfo: {},
-      userMenus: []
+      userMenus: [],
+      permissions: []
     }
   },
   actions: {
@@ -81,6 +82,9 @@ const loginModule: Module<ILoginState, IRootState> = {
       routes.forEach((route) => {
         router.addRoute("main", route)
       })
+
+      const permissions = mapMenusToPermissions(userMenus)
+      state.permissions = permissions
     }
   }
 }

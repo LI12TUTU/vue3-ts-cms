@@ -7,6 +7,10 @@ export interface ISystemState extends ISystemStateKey {
   userCount: number
   roleList: any[]
   roleCount: number
+  goodList: any[]
+  goodCount: number
+  menuList: any[]
+  menuCount: number
 }
 
 export interface IGetPageListPayload {
@@ -14,7 +18,13 @@ export interface IGetPageListPayload {
   queryInfo: any
 }
 
+export interface IDeletePayload {
+  pageName: string
+  id: number
+}
+
 export interface IPageType {
+  deleteUrl: string
   pageUrl: string
   mutationTypes: string[]
 }
