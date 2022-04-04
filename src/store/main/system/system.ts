@@ -5,9 +5,18 @@ import type {
   IGetPageListPayload,
   ISystemState,
   IPageUrlMap,
-  IDeletePayload
+  IDeletePayload,
+  ICreatePayload,
+  IEditPayload,
+  IChangeDataPayload,
+  IPageInfo
 } from "./type"
-import { deletePageData, getPageListData } from "@/service/main/system/system"
+import {
+  deletePageData,
+  createPageData,
+  editPageData,
+  getPageListData
+} from "@/service/main/system/system"
 
 import {
   //#region
@@ -18,28 +27,30 @@ import {
   CHANGE_GOOD_LIST,
   CHANGE_GOOD_COUNT,
   CHANGE_MENU_LIST,
-  CHANGE_MENU_COUNT
+  CHANGE_MENU_COUNT,
+  CHANGE_PAGE_INFO,
+  CHANGE_QUERY_INFO
   //#endregion
-} from "./system-mutation-types"
+} from "./system-mutation-type"
 
 const pageUrlMap: IPageUrlMap = {
   user: {
-    deleteUrl: "/users",
+    baseUrl: "/users",
     pageUrl: "/users/list",
     mutationTypes: [CHANGE_USER_LIST, CHANGE_USER_COUNT]
   },
   role: {
-    deleteUrl: "/role",
+    baseUrl: "/role",
     pageUrl: "/role/list",
     mutationTypes: [CHANGE_ROLE_LIST, CHANGE_ROLE_COUNT]
   },
   good: {
-    deleteUrl: "/goods",
+    baseUrl: "/goods",
     pageUrl: "/goods/list",
     mutationTypes: [CHANGE_GOOD_LIST, CHANGE_GOOD_COUNT]
   },
   menu: {
-    deleteUrl: "/menu",
+    baseUrl: "/menu",
     pageUrl: "/menu/list",
     mutationTypes: [CHANGE_MENU_LIST, CHANGE_MENU_COUNT]
   }
@@ -56,7 +67,12 @@ const systemModule: Module<ISystemState, IRootState> = {
       goodList: [],
       goodCount: 0,
       menuList: [],
-      menuCount: 0
+      menuCount: 0,
+      pageInfo: {
+        currentPage: 1,
+        pageSize: 10
+      },
+      queryInfo: {}
     }
   },
   getters: {
@@ -86,23 +102,56 @@ const systemModule: Module<ISystemState, IRootState> = {
 
     async deletePageDataAction({ dispatch }, payload: IDeletePayload) {
       const { pageName, id } = payload
-      const deleteUrl = pageUrlMap[pageName].deleteUrl
-      const pageUrl = `${deleteUrl}/${id}`
+      const baseUrl = pageUrlMap[pageName].baseUrl
+      const deleteUrl = `${baseUrl}/${id}`
 
-      const result = await deletePageData(pageUrl)
+      const result = await deletePageData(deleteUrl)
+      dispatch("changePageDataAction", {
+        pageName,
+        result,
+        changeName: "删除"
+      })
+    },
+
+    async createPageDataAction({ dispatch }, payload: ICreatePayload) {
+      const { pageName, newData } = payload
+      const baseUrl = pageUrlMap[pageName].baseUrl
+      const result = await createPageData(baseUrl, newData)
+      dispatch("changePageDataAction", {
+        pageName,
+        result,
+        changeName: "新建"
+      })
+    },
+
+    async editPageDataAction({ dispatch }, payload: IEditPayload) {
+      const { pageName, editData, id } = payload
+      const baseUrl = pageUrlMap[pageName].baseUrl
+      const editUrl = `${baseUrl}/${id}`
+
+      const result = await editPageData(editUrl, editData)
+      dispatch("changePageDataAction", {
+        pageName,
+        result,
+        changeName: "编辑"
+      })
+    },
+
+    changePageDataAction({ state, dispatch }, payload: IChangeDataPayload) {
+      const { pageName, result, changeName } = payload
       if (result.code) {
-        ElMessage.error("删除失败")
+        ElMessage.error(`${changeName}失败`)
         return
       }
-
       dispatch("getPageListAction", {
         pageName,
         queryInfo: {
-          offset: 0,
-          size: 10
+          offset: (state.pageInfo.currentPage - 1) * state.pageInfo.pageSize,
+          size: state.pageInfo.pageSize,
+          ...state.queryInfo
         }
       })
-      ElMessage.success("删除成功")
+      ElMessage.success(`${changeName}成功`)
     }
   },
   mutations: {
@@ -129,6 +178,12 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     [CHANGE_MENU_COUNT](state, menuCount: number) {
       state.menuCount = menuCount
+    },
+    [CHANGE_PAGE_INFO](state, pageInfo: IPageInfo) {
+      state.pageInfo = pageInfo
+    },
+    [CHANGE_QUERY_INFO](state, queryInfo: any) {
+      state.queryInfo = queryInfo
     }
   }
 }

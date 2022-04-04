@@ -2,7 +2,8 @@
   <div class="menu">
     <page-content
       :contentTableConfig="contentTableConfig"
-      pageName="menu"
+      :pageName="pageName"
+      :createName="createName"
     ></page-content>
   </div>
 </template>
@@ -12,9 +13,13 @@ import { defineComponent } from "vue"
 import { contentTableConfig } from "./config/content-config"
 
 export default defineComponent({
-  name: "my-menu",
+  name: "Menu",
   setup() {
+    const pageName = "menu"
+    const createName = "新建菜单"
     return {
+      pageName,
+      createName,
       contentTableConfig
     }
   }

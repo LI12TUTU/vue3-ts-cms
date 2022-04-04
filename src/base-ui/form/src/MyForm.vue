@@ -1,34 +1,44 @@
 <template>
-  <div class="my-form">
+  <div
+    class="my-form"
+    :style="{ paddingTop: showFormPadding ? '22px' : '0px' }"
+  >
     <div class="header">
       <slot name="header"></slot>
     </div>
-    <el-form :label-width="labelWidth" v-bind="formOptions">
+    <el-form
+      ref="ElFormRef"
+      v-bind="formOptions"
+      :model="modelValue"
+      :label-width="labelWidth"
+    >
       <el-row>
         <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="colLayout">
             <el-form-item
+              v-if="!item.isHidden"
               v-bind="item.formItemOptions"
+              :style="itemStyle"
+              :prop="item.field"
               :label="item.label"
               :rules="item.rules"
-              :style="itemStyle"
             >
               <template
                 v-if="item.type === 'input' || item.type === 'password'"
               >
                 <el-input
+                  v-bind="item.otherOptions"
                   :placeholder="item.placeholder ?? ''"
                   :show-password="item.type === 'password'"
-                  v-bind="item.otherOptions"
                   :model-value="modelValue[item.field]"
                   @update:model-value="handleValueChange($event, item.field)"
                 />
               </template>
               <template v-else-if="item.type === 'select'">
                 <el-select
-                  :placeholder="item.placeholder"
-                  style="width: 100%"
                   v-bind="item.otherOptions"
+                  style="width: 100%"
+                  :placeholder="item.placeholder"
                   :model-value="modelValue[item.field]"
                   @update:model-value="handleValueChange($event, item.field)"
                 >
@@ -60,7 +70,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue"
+import { defineComponent, PropType, ref } from "vue"
+import { ElForm } from "element-plus"
 import { IFormItem, IModelValue } from "../types"
 
 export default defineComponent({
@@ -94,6 +105,10 @@ export default defineComponent({
         sm: 24,
         xs: 24
       })
+    },
+    showFormPadding: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ["update:modelValue"],
@@ -115,11 +130,19 @@ export default defineComponent({
     // )
     //#endregion
 
+    const ElFormRef = ref<InstanceType<typeof ElForm>>()
+    const confimAction = () => {
+      const validPromise = ElFormRef.value?.validate()
+      return validPromise
+    }
+
     const handleValueChange = (value: string, field: string) => {
       emit("update:modelValue", { ...props.modelValue, [field]: value })
     }
 
     return {
+      ElFormRef,
+      confimAction,
       handleValueChange
     }
   }

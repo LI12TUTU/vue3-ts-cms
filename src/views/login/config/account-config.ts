@@ -6,8 +6,8 @@ const rules = {
       trigger: "blur"
     },
     {
-      pattern: /^[a-z0-9]{5,10}$/,
-      message: "用户名必须是5~10个字符或者数字",
+      pattern: /^[a-z0-9]{3,10}$/i,
+      message: "用户名必须是3~10个字符或者数字",
       tigger: "blur"
     }
   ],
@@ -18,7 +18,7 @@ const rules = {
       trigger: "blur"
     },
     {
-      pattern: /^[a-z0-9]{6,15}$/,
+      pattern: /^[a-z0-9]{6,15}$/i,
       message: "用户名必须是6~15个字符或者数字",
       tigger: "blur"
     }

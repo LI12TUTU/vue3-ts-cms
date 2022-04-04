@@ -31,7 +31,7 @@ import { useStore } from "@/store"
 import MyBreadcrumb from "@/base-ui/breadcrumb"
 import UserInfo from "./user-info.vue"
 
-import { isFold, useScreen } from "./hooks/useScreen"
+import { isFold, useScreen } from "../hooks/use-screen"
 import { mapPathToBreadcrumbs } from "@/utils/map-menus"
 
 export default defineComponent({

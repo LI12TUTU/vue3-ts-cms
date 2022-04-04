@@ -1,9 +1,11 @@
-export function debounce(fn: any, delay: number, immediate = false) {
+type CallbackFn = (...args: any[]) => any
+
+export function debounce(fn: CallbackFn, delay: number, immediate = false) {
   let timer: any = null
   let isInvoke = false
 
   const _execFunWithError = function (
-    fn: any,
+    fn: CallbackFn,
     thisArg: any,
     args: any[],
     resolve: any,

@@ -9,6 +9,7 @@ import { defineComponent } from "vue"
 import LoginPanel from "./cpns/login-panel.vue"
 
 export default defineComponent({
+  name: "Login",
   components: {
     LoginPanel
   },

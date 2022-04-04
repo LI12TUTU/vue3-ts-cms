@@ -6,9 +6,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
+import * as echarts from "echarts"
 
 export default defineComponent({
-  name: "dashboard",
+  name: "Dashboard",
   setup() {
     return {}
   }

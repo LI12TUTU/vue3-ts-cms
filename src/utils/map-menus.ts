@@ -1,17 +1,20 @@
 import { RouteRecordRaw } from "vue-router"
 import { IBreadcrumb } from "@/base-ui/breadcrumb"
 
+// 页面跳转的第一个路由
 let firstMenu: any = null
 
 export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
 
   const allRoutes: RouteRecordRaw[] = []
+  // 导入所有router/main/的ts文件
   const routeFiles = require.context("../router/main", true, /\.ts/)
   routeFiles.keys().forEach((key) => {
     // import("../router/main" + key.split(".")[1]).then((res) => {
     //   allRoutes.push(res.default)
     // })
+    // 导入ts文件下的路由对象
     const route = require("../router/main" + key.split(".")[1])
     allRoutes.push(route.default)
   })
@@ -74,6 +77,24 @@ export function mapMenusToPermissions(userMenus: any[]) {
   _recurseGetPermission(userMenus)
 
   return permissions
+}
+
+export function mapMenuToLeafKeys(menuList: any[]) {
+  const leafKeys: number[] = []
+
+  const _recurseGetLeaf = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.children) {
+        _recurseGetLeaf(menu.children)
+      } else {
+        leafKeys.push(menu.id)
+      }
+    }
+  }
+
+  _recurseGetLeaf(menuList)
+
+  return leafKeys
 }
 
 export { firstMenu }

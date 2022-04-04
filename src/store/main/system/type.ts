@@ -1,5 +1,10 @@
 export interface ISystemStateKey {
-  [key: string]: any
+  [key: string | symbol]: any
+}
+
+export interface IPageInfo {
+  currentPage: number
+  pageSize: number
 }
 
 export interface ISystemState extends ISystemStateKey {
@@ -11,6 +16,8 @@ export interface ISystemState extends ISystemStateKey {
   goodCount: number
   menuList: any[]
   menuCount: number
+  pageInfo: IPageInfo
+  queryInfo: any
 }
 
 export interface IGetPageListPayload {
@@ -23,12 +30,29 @@ export interface IDeletePayload {
   id: number
 }
 
+export interface ICreatePayload {
+  pageName: string
+  newData: any
+}
+
+export interface IEditPayload {
+  pageName: string
+  editData: any
+  id: number
+}
+
+export interface IChangeDataPayload {
+  pageName: string
+  result: any
+  changeName: string
+}
+
 export interface IPageType {
-  deleteUrl: string
+  baseUrl: string
   pageUrl: string
   mutationTypes: string[]
 }
 
 export interface IPageUrlMap {
-  [key: string]: IPageType
+  [key: string | symbol]: IPageType
 }

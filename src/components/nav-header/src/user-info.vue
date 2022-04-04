@@ -2,9 +2,10 @@
   <div class="user-info">
     <el-dropdown>
       <span class="el-dropdown-link">
+        <!-- 本地url导入不生效，需要在js中导入 -->
         <el-avatar :src="avatarUrl" :size="30" />
         <!-- <span class="user-name">{{ name }}</span> -->
-        <el-icon class="el-icon--right"><arrow-down /></el-icon>
+        <el-icon><arrow-down /></el-icon>
       </span>
       <template #dropdown>
         <el-dropdown-menu>

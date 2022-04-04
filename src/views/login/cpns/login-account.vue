@@ -1,10 +1,10 @@
 <template>
   <div class="login-account">
-    <el-form label-width="60px" :rules="rules" :model="account" ref="formRef">
-      <el-form-item label="账号" prop="name" class="form-item">
+    <el-form ref="formRef" label-width="60px" :rules="rules" :model="account">
+      <el-form-item class="form-item" label="账号" prop="name">
         <el-input v-model="account.name" placeholder="请输入账号"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="password" class="form-item">
+      <el-form-item class="form-item" label="密码" prop="password">
         <el-input
           v-model="account.password"
           show-password
@@ -17,13 +17,15 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue"
+import { useStore } from "@/store"
 import { ElForm } from "element-plus"
-import { useStore } from "vuex"
+
 import rules from "../config/account-config"
 import { localCache } from "@/utils/cache"
 import { NAME_KEY, PASSWORD_KEY } from "@/constants/storage-key"
 
 export default defineComponent({
+  name: "LoginAccount",
   setup() {
     const account = reactive({
       name: localCache.getItem(NAME_KEY) ?? "",

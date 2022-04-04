@@ -9,9 +9,9 @@
       </slot>
     </div>
     <el-table
-      :data="listData"
-      style="width: 100%"
       v-bind="tableOptions"
+      style="width: 100%"
+      :data="listData"
       @selection-change="handleSelectionChange"
     >
       <el-table-column
@@ -93,7 +93,7 @@ export default defineComponent({
     page: {
       type: Object,
       default: () => ({
-        currentPage: 0,
+        currentPage: 1,
         pageSize: 10
       })
     },
@@ -104,7 +104,7 @@ export default defineComponent({
   },
   emits: ["selectionChange", "update:page"],
   setup(props, { emit }) {
-    const handleSelectionChange = (value: any) => {
+    const handleSelectionChange = (value: any[]) => {
       emit("selectionChange", value)
     }
 

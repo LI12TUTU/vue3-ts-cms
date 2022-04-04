@@ -13,7 +13,7 @@ import {
   CHANGE_TOKEN,
   CHANGE_USER_INFO,
   CHANGE_USER_MENUS
-} from "./loginMutationType"
+} from "./login-mutation-type"
 
 import { localCache } from "@/utils/cache"
 import {
@@ -36,11 +36,13 @@ const loginModule: Module<ILoginState, IRootState> = {
     }
   },
   actions: {
-    async accountLoginAction({ commit }, payload: IAccount) {
+    async accountLoginAction({ commit, dispatch }, payload: IAccount) {
       const loginResult = await accountLoginRequest(payload)
       const { id, token } = loginResult
       commit(CHANGE_TOKEN, token)
       localCache.setItem(TOKEN_KEY, token)
+
+      dispatch("getInitialDataAction", null, { root: true })
 
       const userInfo = await requestUserInfoById(id)
       commit(CHANGE_USER_INFO, userInfo)
@@ -52,10 +54,11 @@ const loginModule: Module<ILoginState, IRootState> = {
 
       router.push("/main")
     },
-    loadLocalLogin({ commit }) {
+    loadLocalLogin({ commit, dispatch }) {
       const token = localCache.getItem(TOKEN_KEY)
       if (token) {
         commit(CHANGE_TOKEN, token)
+        dispatch("getInitialDataAction", null, { root: true })
       }
 
       const userInfo = localCache.getItem(USER_INFO_KEY)

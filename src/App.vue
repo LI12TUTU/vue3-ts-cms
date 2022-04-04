@@ -1,4 +1,5 @@
 <template>
+  <!-- element-plus全局配置语言 -->
   <el-config-provider :locale="zhCn">
     <router-view></router-view>
   </el-config-provider>
@@ -17,5 +18,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="less"></style>

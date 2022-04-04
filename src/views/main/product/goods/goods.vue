@@ -27,7 +27,7 @@ import { defineComponent } from "vue"
 import { contentTableConfig } from "./config/content-config"
 
 export default defineComponent({
-  name: "goods",
+  name: "Goods",
   setup() {
     return {
       contentTableConfig

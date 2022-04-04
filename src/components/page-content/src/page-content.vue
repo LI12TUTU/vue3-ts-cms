@@ -1,14 +1,24 @@
 <template>
   <div class="page-content">
     <my-table
-      :listData="dataList"
-      :listCount="dataCount"
       v-bind="contentTableConfig"
       v-model:page="pageInfo"
+      :listData="dataList"
+      :listCount="dataCount"
+      @selectionChange="handleSelectionChange"
     >
       <template #headerHandler>
         <slot name="header">
-          <el-button v-if="isCreate" type="primary">新建用户</el-button>
+          <el-button v-if="isCreate" type="primary" @click="handleNewClick">
+            {{ createName }}
+          </el-button>
+          <el-button
+            v-if="isDelete && contentTableConfig.showSelectColumn"
+            type="primary"
+            @click="handleSomeClick"
+          >
+            批量删除
+          </el-button>
         </slot>
       </template>
       <template #status="scope">
@@ -28,11 +38,18 @@
       </template>
       <template #handler="scope">
         <div>
-          <el-button v-if="isUpdate" type="text" size="small" icon="edit">
+          <el-button
+            v-if="isUpdate"
+            type="text"
+            size="small"
+            icon="edit"
+            @click="handleEditClick(scope.row)"
+          >
             编辑
           </el-button>
           <el-button
             v-if="isDelete"
+            class="delete-btn"
             type="text"
             size="small"
             icon="delete"
@@ -54,11 +71,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed, watch } from "vue"
+import { defineComponent, PropType, computed } from "vue"
+import { useStore } from "@/store"
 import MyTable from "@/base-ui/table"
 import type { ITable } from "@/base-ui/table"
-import { useStore } from "@/store"
 import { usePermission } from "@/hooks/use-premission"
+import { useSelection } from "../hooks/use-selection"
+import { usePageData } from "../hooks/use-page-data"
 
 export default defineComponent({
   components: {
@@ -72,32 +91,23 @@ export default defineComponent({
     pageName: {
       type: String,
       required: true
+    },
+    createName: {
+      type: String,
+      required: true
     }
   },
-  setup(props) {
+  emits: ["newBtnClick", "editBtnClick"],
+  setup(props, { emit }) {
     const store = useStore()
 
+    //查询相关权限
     const isCreate = usePermission(props.pageName, "create")
     const isDelete = usePermission(props.pageName, "delete")
     const isUpdate = usePermission(props.pageName, "update")
     const isQuery = usePermission(props.pageName, "query")
 
-    const pageInfo = ref({
-      currentPage: 1,
-      pageSize: 10
-    })
-    const getPageData = (queryInfo: any = {}) => {
-      store.dispatch("system/getPageListAction", {
-        pageName: props.pageName,
-        queryInfo: {
-          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
-          size: pageInfo.value.pageSize,
-          ...queryInfo
-        }
-      })
-    }
-    watch(pageInfo, () => getPageData(), { immediate: true })
-
+    //获取页面数据和数据总数
     const dataList = computed(() =>
       store.getters["system/pageListData"](props.pageName)
     )
@@ -105,6 +115,7 @@ export default defineComponent({
       store.getters["system/pageListCount"](props.pageName)
     )
 
+    //获取页面的其他插槽
     const otherPropSlots = props.contentTableConfig.propsList.filter((item) => {
       if (!item.slotName) return false
       if (item.slotName === "status") return false
@@ -121,6 +132,20 @@ export default defineComponent({
       })
     }
 
+    const handleNewClick = () => {
+      emit("newBtnClick")
+    }
+
+    const handleEditClick = (item: any) => {
+      emit("editBtnClick", item)
+    }
+
+    const { pageInfo, getPageData } = usePageData(props.pageName)
+
+    const { handleSelectionChange, handleSomeClick } = useSelection(
+      props.pageName
+    )
+
     return {
       dataList,
       dataCount,
@@ -131,7 +156,11 @@ export default defineComponent({
       isDelete,
       isQuery,
       getPageData,
-      handleDeleteClick
+      handleDeleteClick,
+      handleNewClick,
+      handleEditClick,
+      handleSomeClick,
+      handleSelectionChange
     }
   }
 })
@@ -143,5 +172,9 @@ export default defineComponent({
   box-sizing: border-box;
   padding: 20px;
   border-top: 20px solid @page-content-bgColor;
+}
+
+.delete-btn {
+  color: red;
 }
 </style>

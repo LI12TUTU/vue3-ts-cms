@@ -14,6 +14,7 @@ export interface IFormItem {
   selectOptions?: optionsType[]
   formItemOptions?: any
   otherOptions?: any
+  isHidden?: boolean
 }
 
 export interface IForm {
@@ -21,8 +22,9 @@ export interface IForm {
   labelWidth?: string
   colLayout?: any
   itemStyle?: any
+  showFormPadding?: boolean
 }
 
 export interface IModelValue {
-  [key: string]: string
+  [key: string | symbol]: string
 }

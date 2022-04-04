@@ -1,7 +1,7 @@
 <template>
   <div class="login-panel">
     <h1 class="title">后台管理系统</h1>
-    <el-tabs type="border-card" stretch v-model="currentTab">
+    <el-tabs v-model="currentTab" type="border-card" stretch>
       <el-tab-pane name="account">
         <template #label>
           <span>
@@ -29,7 +29,7 @@
       <el-checkbox v-model="isKeepPassword">记住密码</el-checkbox>
       <el-link type="primary">忘记密码</el-link>
     </div>
-    <el-button type="primary" class="login-btn" @click="handleLoginClick">
+    <el-button class="login-btn" type="primary" @click="handleLoginClick">
       立即登录
     </el-button>
   </div>
@@ -41,6 +41,7 @@ import LoginAccount from "./login-account.vue"
 import LoginPhone from "./login-phone.vue"
 
 export default defineComponent({
+  name: "LoginPanel",
   components: {
     LoginAccount,
     LoginPhone

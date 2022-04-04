@@ -40,17 +40,6 @@ export const searchFormConfig: IForm = {
         type: "daterange",
         unlinkPanels: true
       }
-    },
-    {
-      field: "updateAt",
-      type: "datapicker",
-      label: "更新时间",
-      otherOptions: {
-        startPlaceholder: "开始时间",
-        endPlaceholder: "结束时间",
-        type: "daterange",
-        unlinkPanels: true
-      }
     }
   ]
 }
