@@ -48,7 +48,8 @@ const loginModule: Module<ILoginState, IRootState> = {
       commit(CHANGE_USER_INFO, userInfo)
       localCache.setItem(USER_INFO_KEY, userInfo)
 
-      const userMenus = await requestUserMenusByRoleId(userInfo.role.id)
+      let userMenus = await requestUserMenusByRoleId(userInfo.role.id)
+      userMenus = userMenus.filter((item: any) => item.id !== 41)
       commit(CHANGE_USER_MENUS, userMenus)
       localCache.setItem(USER_MENUS_KEY, userMenus)
 

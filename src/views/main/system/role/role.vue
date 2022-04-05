@@ -1,7 +1,12 @@
 <template>
   <div class="role">
-    <page-search :searchFormConfig="searchFormConfig"></page-search>
+    <page-search
+      :searchFormConfig="searchFormConfig"
+      @resetBtnClick="handleResetClick"
+      @queryBtnClick="handleQueryClick"
+    ></page-search>
     <page-content
+      ref="pageContentRef"
       :contentTableConfig="contentTableConfig"
       :pageName="pageName"
       :createName="createName"
@@ -16,16 +21,19 @@
       :pageName="pageName"
       :dialogTitle="dialogTitle"
     >
-      <div class="menu-tree">
-        <el-tree
-          ref="elTreeRef"
-          :data="menus"
-          :props="{ children: 'children', label: 'name' }"
-          node-key="id"
-          show-checkbox
-          @check="handleCheckChange"
-        />
-      </div>
+      <template #default>
+        <div class="menu-tree">
+          <span class="title">权限分配</span>
+          <el-tree
+            ref="elTreeRef"
+            :data="menus"
+            :props="{ children: 'children', label: 'name' }"
+            node-key="id"
+            show-checkbox
+            @check="handleCheckChange"
+          />
+        </div>
+      </template>
     </page-modal>
   </div>
 </template>
@@ -39,8 +47,9 @@ import { searchFormConfig } from "./config/search-config"
 import { contentTableConfig } from "./config/content-config"
 import { modalConfig } from "./config/modal-config"
 
+import { usePageSearch } from "@/hooks/use-page-search"
 import { usePageModal } from "@/hooks/use-page-modal"
-import { mapMenuToLeafKeys } from "@/utils/map-menus"
+import { mapMenusToLeafKeys } from "@/utils/map-menus"
 
 export default defineComponent({
   name: "Role",
@@ -61,11 +70,13 @@ export default defineComponent({
     const elTreeRef = ref<InstanceType<typeof ElTree>>()
     const editCallback = (item: any) => {
       nextTick(() => {
-        const leafKeys = mapMenuToLeafKeys(item.menuList)
+        const leafKeys = mapMenusToLeafKeys(item.menuList)
         elTreeRef.value?.setCheckedKeys(leafKeys, false)
       })
     }
 
+    const { pageContentRef, handleResetClick, handleQueryClick } =
+      usePageSearch()
     const {
       pageModalRef,
       defaultInfo,
@@ -76,12 +87,13 @@ export default defineComponent({
     } = usePageModal(pageName, undefined, editCallback)
 
     return {
+      pageContentRef,
+      pageModalRef,
+      elTreeRef,
       menus,
       pageName,
       createName,
       dialogTitle,
-      pageModalRef,
-      elTreeRef,
       defaultInfo,
       otherInfo,
       searchFormConfig,
@@ -89,6 +101,8 @@ export default defineComponent({
       modalConfig,
       handleNewData,
       handleEditData,
+      handleResetClick,
+      handleQueryClick,
       handleCheckChange
     }
   }
@@ -97,6 +111,17 @@ export default defineComponent({
 
 <style scoped lang="less">
 .menu-tree {
-  margin-left: 40px;
+  width: 100%;
+  display: flex;
+
+  .title {
+    width: 100px;
+    padding-right: 12px;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    font-size: 14px;
+    color: #606060;
+    text-align: right;
+  }
 }
 </style>

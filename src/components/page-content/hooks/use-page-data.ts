@@ -1,4 +1,4 @@
-import { ref, watch } from "vue"
+import { ref, watch, computed } from "vue"
 import { useStore } from "@/store"
 import { CHANGE_PAGE_INFO } from "@/store/main/system/system-mutation-type"
 
@@ -9,6 +9,8 @@ export function usePageData(pageName: string) {
     currentPage: 1,
     pageSize: 10
   })
+
+  const defaultInfo = computed(() => store.state.system.queryInfo)
 
   const getPageData = (queryInfo: any = {}) => {
     store.dispatch("system/getPageListAction", {
@@ -24,7 +26,7 @@ export function usePageData(pageName: string) {
   watch(
     pageInfo,
     (newValue) => {
-      getPageData()
+      getPageData(defaultInfo.value)
       store.commit(`system/${CHANGE_PAGE_INFO}`, newValue)
     },
     { immediate: true }

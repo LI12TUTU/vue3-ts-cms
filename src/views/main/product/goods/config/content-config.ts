@@ -15,6 +15,11 @@ export const contentTableConfig: ITable = {
       slotName: "image"
     },
     {
+      prop: "address",
+      label: "地区",
+      minWidth: "80"
+    },
+    {
       prop: "oldPrice",
       label: "原价",
       minWidth: "80",
@@ -58,5 +63,6 @@ export const contentTableConfig: ITable = {
       minWidth: "140",
       slotName: "handler"
     }
-  ]
+  ],
+  showSelectColumn: true
 }

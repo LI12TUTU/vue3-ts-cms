@@ -9,6 +9,7 @@ export function usePageSearch() {
   const pageContentRef = ref<InstanceType<typeof PageContent>>()
   const handleResetClick = () => {
     if (!pageContentRef.value?.isQuery) return
+    store.commit(`system/${CHANGE_QUERY_INFO}`, {})
     pageContentRef.value?.getPageData()
   }
   const handleQueryClick = (queryInfo: any) => {

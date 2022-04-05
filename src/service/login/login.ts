@@ -3,6 +3,7 @@ import type { IAccount, ILoginResult } from "./type"
 
 enum LoginAPI {
   AccountLogin = "/login",
+  checkToken = "/test",
   LoginUserInfo = "/users/",
   UserMenus = "/role/"
 }
@@ -11,6 +12,12 @@ export function accountLoginRequest(account: IAccount) {
   return ryRequest.post<ILoginResult>({
     url: LoginAPI.AccountLogin,
     data: account
+  })
+}
+
+export function checkToken() {
+  return ryRequest.get({
+    url: LoginAPI.checkToken
   })
 }
 

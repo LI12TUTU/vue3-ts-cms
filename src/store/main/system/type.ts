@@ -16,6 +16,10 @@ export interface ISystemState extends ISystemStateKey {
   goodCount: number
   menuList: any[]
   menuCount: number
+  departmentList: any[]
+  departmentCount: number
+  categoryList: any[]
+  categoryCount: number
   pageInfo: IPageInfo
   queryInfo: any
 }

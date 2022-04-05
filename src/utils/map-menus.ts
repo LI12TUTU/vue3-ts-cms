@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from "vue-router"
 import { IBreadcrumb } from "@/base-ui/breadcrumb"
+import { ISelectOptions } from "@/base-ui/form"
 
 // 页面跳转的第一个路由
 let firstMenu: any = null
@@ -79,7 +80,7 @@ export function mapMenusToPermissions(userMenus: any[]) {
   return permissions
 }
 
-export function mapMenuToLeafKeys(menuList: any[]) {
+export function mapMenusToLeafKeys(menuList: any[]) {
   const leafKeys: number[] = []
 
   const _recurseGetLeaf = (menus: any[]) => {
@@ -95,6 +96,56 @@ export function mapMenuToLeafKeys(menuList: any[]) {
   _recurseGetLeaf(menuList)
 
   return leafKeys
+}
+
+export function mapIdToMenuName(id: number, menuList: any[]) {
+  let name = ""
+
+  if (id === undefined) return name
+
+  const _recurseGetMenuName = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.id === id) {
+        name = menu.name
+        return
+      }
+
+      if (name !== "") return
+
+      if (menu.children) {
+        _recurseGetMenuName(menu.children)
+      }
+    }
+  }
+
+  _recurseGetMenuName(menuList)
+
+  return name
+}
+
+export function mapMenusToOptions(menuList: any[]) {
+  const options: ISelectOptions[] = []
+
+  const _recurseGetSelectOptions = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.type === 1) {
+        options.push({
+          label: menu.name,
+          value: menu.id
+        })
+        _recurseGetSelectOptions(menu.children ?? [])
+      } else if (menu.type === 2) {
+        options.push({
+          label: menu.name,
+          value: menu.id
+        })
+      }
+    }
+  }
+
+  _recurseGetSelectOptions(menuList)
+
+  return options
 }
 
 export { firstMenu }

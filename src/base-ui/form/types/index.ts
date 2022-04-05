@@ -1,6 +1,6 @@
 type IFormType = "input" | "password" | "select" | "datapicker"
 
-interface optionsType {
+export interface ISelectOptions {
   label: string
   value: any
 }
@@ -11,7 +11,7 @@ export interface IFormItem {
   label: string
   rules?: any[]
   placeholder?: string
-  selectOptions?: optionsType[]
+  selectOptions?: ISelectOptions[]
   formItemOptions?: any
   otherOptions?: any
   isHidden?: boolean

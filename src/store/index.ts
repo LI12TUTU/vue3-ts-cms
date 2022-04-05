@@ -34,7 +34,8 @@ const store = createStore<IRootState>({
         size: 1000
       })
 
-      const { list: menuList } = await getPageListData("/menu/list", {})
+      let { list: menuList } = await getPageListData("/menu/list", {})
+      menuList = menuList.filter((item: any) => item.id !== 41)
 
       commit(CHANGE_ENTIRE_DEPARTMENT, departmentList)
       commit(CHANGE_ENTIRE_ROLE, roleList)

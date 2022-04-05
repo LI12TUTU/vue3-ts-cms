@@ -6,17 +6,25 @@ export const contentTableConfig: ITable = {
     {
       prop: "name",
       label: "菜单名称",
-      minWidth: "100"
+      minWidth: "120"
     },
     {
       prop: "type",
       label: "菜单类型",
-      minWidth: "100"
+      minWidth: "100",
+      slotName: "menuType"
     },
     {
-      prop: "premission",
+      prop: "parentId",
+      label: "上级菜单",
+      minWidth: "100",
+      slotName: "parentMenu"
+    },
+    {
+      prop: "permission",
       label: "按钮权限",
-      minWidth: "100"
+      minWidth: "100",
+      slotName: "permission"
     },
     {
       prop: "createAt",

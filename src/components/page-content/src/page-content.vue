@@ -75,7 +75,7 @@ import { defineComponent, PropType, computed } from "vue"
 import { useStore } from "@/store"
 import MyTable from "@/base-ui/table"
 import type { ITable } from "@/base-ui/table"
-import { usePermission } from "@/hooks/use-premission"
+import { usePermission } from "@/hooks/use-permission"
 import { useSelection } from "../hooks/use-selection"
 import { usePageData } from "../hooks/use-page-data"
 

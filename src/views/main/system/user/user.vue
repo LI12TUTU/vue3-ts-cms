@@ -2,8 +2,8 @@
   <div class="user">
     <page-search
       :searchFormConfig="searchFormConfig"
-      @reset-btn-click="handleResetClick"
-      @query-btn-click="handleQueryClick"
+      @resetBtnClick="handleResetClick"
+      @queryBtnClick="handleQueryClick"
     ></page-search>
     <page-content
       ref="pageContentRef"

@@ -20,6 +20,22 @@ const nameMap: INameMap = {
   role: {
     createName: "新建角色",
     editName: "编辑角色"
+  },
+  department: {
+    createName: "新建部门",
+    editName: "编辑部门"
+  },
+  menu: {
+    createName: "新建菜单",
+    editName: "编辑菜单"
+  },
+  good: {
+    createName: "新建商品",
+    editName: "编辑商品"
+  },
+  category: {
+    createName: "新建类别",
+    editName: "编辑类别"
   }
 }
 

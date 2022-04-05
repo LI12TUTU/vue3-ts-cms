@@ -28,6 +28,10 @@ import {
   CHANGE_GOOD_COUNT,
   CHANGE_MENU_LIST,
   CHANGE_MENU_COUNT,
+  CHANGE_DEPARTMENT_LIST,
+  CHANGE_DEPARTMENT_COUNT,
+  CHANGE_CATEGORY_LIST,
+  CHANGE_CATEGORY_COUNT,
   CHANGE_PAGE_INFO,
   CHANGE_QUERY_INFO
   //#endregion
@@ -53,6 +57,16 @@ const pageUrlMap: IPageUrlMap = {
     baseUrl: "/menu",
     pageUrl: "/menu/list",
     mutationTypes: [CHANGE_MENU_LIST, CHANGE_MENU_COUNT]
+  },
+  department: {
+    baseUrl: "/department",
+    pageUrl: "/department/list",
+    mutationTypes: [CHANGE_DEPARTMENT_LIST, CHANGE_DEPARTMENT_COUNT]
+  },
+  category: {
+    baseUrl: "/category",
+    pageUrl: "/category/list",
+    mutationTypes: [CHANGE_CATEGORY_LIST, CHANGE_CATEGORY_COUNT]
   }
 }
 
@@ -68,6 +82,10 @@ const systemModule: Module<ISystemState, IRootState> = {
       goodCount: 0,
       menuList: [],
       menuCount: 0,
+      departmentList: [],
+      departmentCount: 0,
+      categoryList: [],
+      categoryCount: 0,
       pageInfo: {
         currentPage: 1,
         pageSize: 10
@@ -94,7 +112,12 @@ const systemModule: Module<ISystemState, IRootState> = {
       const mutationTypes = pageUrlMap[pageName].mutationTypes
 
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
-      const { list, totalCount } = pageResult
+      let { list } = pageResult
+      const { totalCount } = pageResult
+
+      if (pageName === "menu") {
+        list = list.filter((item: any) => item.id !== 41)
+      }
 
       commit(mutationTypes[0], list)
       commit(mutationTypes[1], totalCount)
@@ -178,6 +201,18 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     [CHANGE_MENU_COUNT](state, menuCount: number) {
       state.menuCount = menuCount
+    },
+    [CHANGE_DEPARTMENT_LIST](state, departmentList: any[]) {
+      state.departmentList = departmentList
+    },
+    [CHANGE_DEPARTMENT_COUNT](state, departmentCount: number) {
+      state.departmentCount = departmentCount
+    },
+    [CHANGE_CATEGORY_LIST](state, categoryList: any[]) {
+      state.categoryList = categoryList
+    },
+    [CHANGE_CATEGORY_COUNT](state, categoryCount: number) {
+      state.categoryCount = categoryCount
     },
     [CHANGE_PAGE_INFO](state, pageInfo: IPageInfo) {
       state.pageInfo = pageInfo

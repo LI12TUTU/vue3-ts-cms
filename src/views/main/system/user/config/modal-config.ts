@@ -24,7 +24,14 @@ export const modalConfig: IForm = {
       field: "realname",
       type: "input",
       label: "真实姓名",
-      placeholder: "请输入真实姓名"
+      placeholder: "请输入真实姓名",
+      rules: [
+        {
+          required: true,
+          message: "必须输入真实姓名",
+          trigger: "blur"
+        }
+      ]
     },
     {
       field: "password",
@@ -49,8 +56,13 @@ export const modalConfig: IForm = {
       field: "cellphone",
       type: "input",
       label: "电话号码",
-      placeholder: "请输入电话号码",
+      placeholder: "请输入手机号码",
       rules: [
+        {
+          required: true,
+          message: "必须输入手机号码",
+          trigger: "blur"
+        },
         {
           pattern: /^[0-9]{11}$/,
           message: "请输入11位数字的手机号码",
