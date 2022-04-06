@@ -37,6 +37,7 @@ import { modalConfig } from "./config/modal-config"
 
 import { usePageSearch } from "@/hooks/use-page-search"
 import { usePageModal } from "@/hooks/use-page-modal"
+import { useConfig } from "@/hooks/use-config"
 
 export default defineComponent({
   name: "Department",
@@ -55,31 +56,19 @@ export default defineComponent({
       handleEditData
     } = usePageModal(pageName)
 
+    const modalConfigRef = useConfig(
+      ["parentId"],
+      ["entireDepartment"],
+      modalConfig
+    )
+
     const store = useStore()
-    const modalConfigRef = computed(() => {
-      const departmentItem = modalConfig.formItems.find(
-        (item) => item.field === "parentId"
-      )
-      departmentItem!.selectOptions = store.state.entireDepartment.map(
-        (item) => ({
-          label: item.name,
-          value: item.id
-        })
-      )
-
-      return modalConfig
-    })
-
+    const entireDepartment = computed(() => store.state.entireDepartment)
     const formatDepartment = (id: number) => {
-      const departmentItem = store.state.entireDepartment.find(
+      const departmentItem = entireDepartment.value.find(
         (item) => item.id === id
       )
-
-      if (departmentItem) {
-        return departmentItem.name
-      }
-
-      return ""
+      return departmentItem?.name ?? ""
     }
 
     return {

@@ -14,7 +14,7 @@
           </el-button>
           <el-button
             v-if="isDelete && contentTableConfig.showSelectColumn"
-            type="primary"
+            type="danger"
             @click="handleSomeClick"
           >
             批量删除

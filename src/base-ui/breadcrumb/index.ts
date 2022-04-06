@@ -1,4 +1,4 @@
-import MyBreadcrumb from "./src/MyBreadcrumb.vue"
+import MyBreadcrumb from "./src/my-breadcrumb.vue"
 
 export * from "./types"
 export default MyBreadcrumb

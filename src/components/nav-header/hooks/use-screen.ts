@@ -1,9 +1,9 @@
-import { debounce } from "@/utils/debounce"
 import { ref } from "vue"
-
-export const isFold = ref(false)
+import { debounce } from "@/utils/debounce"
 
 export function useScreen(emit: any) {
+  const isFold = ref(false)
+
   function changeMenu() {
     if (window.innerWidth < 768) {
       isFold.value = true
@@ -17,4 +17,6 @@ export function useScreen(emit: any) {
   const debounceChangeMenu = debounce(changeMenu, 200)
 
   window.addEventListener("resize", debounceChangeMenu)
+
+  return isFold
 }

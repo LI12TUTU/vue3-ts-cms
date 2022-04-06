@@ -1,7 +1,7 @@
 <template>
   <div class="goods">
     <page-search
-      :searchFormConfig="searchFormConfig"
+      :searchFormConfig="searchFormConfigRef"
       @resetBtnClick="handleResetClick"
       @queryBtnClick="handleQueryClick"
     ></page-search>
@@ -29,19 +29,23 @@
       <template #newPrice="scope">
         {{ "￥" + scope.row.newPrice }}
       </template>
+      <template #category="scope">
+        {{ formatCategory(scope.row.categoryId) }}
+      </template>
     </page-content>
     <page-modal
       ref="pageModalRef"
       :pageName="pageName"
       :dialogTitle="dialogTitle"
-      :modalConfig="modalConfig"
+      :modalConfig="modalConfigRef"
       :defaultInfo="defaultInfo"
     ></page-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, computed } from "vue"
+import { useStore } from "@/store"
 
 import { searchFormConfig } from "./config/search-config"
 import { contentTableConfig } from "./config/content-config"
@@ -49,11 +53,19 @@ import { modalConfig } from "./config/modal-config"
 
 import { usePageSearch } from "@/hooks/use-page-search"
 import { usePageModal } from "@/hooks/use-page-modal"
+import { useCategory } from "./hooks/use-category"
 
 export default defineComponent({
   name: "Goods",
   setup() {
     const pageName = "good"
+    const store = useStore()
+    const entireCategory = computed(() => store.state.entireCategory)
+
+    const formatCategory = (id: number) => {
+      const category = entireCategory.value.find((item) => item.id === id)
+      return category?.name ?? ""
+    }
 
     const { pageContentRef, handleResetClick, handleQueryClick } =
       usePageSearch()
@@ -67,6 +79,9 @@ export default defineComponent({
       handleEditData
     } = usePageModal(pageName)
 
+    const modalConfigRef = useCategory(modalConfig)
+    const searchFormConfigRef = useCategory(searchFormConfig)
+
     return {
       pageContentRef,
       pageModalRef,
@@ -74,13 +89,14 @@ export default defineComponent({
       pageName,
       createName,
       dialogTitle,
-      searchFormConfig,
+      searchFormConfigRef,
       contentTableConfig,
-      modalConfig,
+      modalConfigRef,
       handleNewData,
       handleEditData,
       handleResetClick,
-      handleQueryClick
+      handleQueryClick,
+      formatCategory
     }
   }
 })

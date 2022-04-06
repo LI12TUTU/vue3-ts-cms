@@ -35,6 +35,20 @@ export const modalConfig: IForm = {
       placeholder: "请输入地区"
     },
     {
+      field: "categoryId",
+      type: "select",
+      label: "商品类别",
+      placeholder: "请选择商品类别",
+      selectOptions: [],
+      rules: [
+        {
+          required: true,
+          message: "必须选择商品类别",
+          trigger: "blur"
+        }
+      ]
+    },
+    {
       field: "oldPrice",
       type: "input",
       label: "原价",
@@ -99,19 +113,6 @@ export const modalConfig: IForm = {
           message: "必须输入原价",
           trigger: "blur"
         },
-        {
-          pattern: /^[0-9]+$/,
-          message: "请输入数字",
-          trigger: "blur"
-        }
-      ]
-    },
-    {
-      field: "favorCount",
-      type: "input",
-      label: "喜欢",
-      placeholder: "请输入喜欢的人数",
-      rules: [
         {
           pattern: /^[0-9]+$/,
           message: "请输入数字",

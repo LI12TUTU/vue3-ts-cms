@@ -24,8 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue"
-import { useStore } from "@/store"
+import { defineComponent } from "vue"
 
 import { searchFormConfig } from "./config/search-config"
 import { contentTableConfig } from "./config/content-config"
@@ -33,6 +32,7 @@ import { modalConfig } from "./config/modal-config"
 
 import { usePageSearch } from "@/hooks/use-page-search"
 import { usePageModal } from "@/hooks/use-page-modal"
+import { useConfig } from "@/hooks/use-config"
 
 export default defineComponent({
   name: "User",
@@ -60,29 +60,11 @@ export default defineComponent({
       handleEditData
     } = usePageModal(pageName, newCallback, editCallback)
 
-    const store = useStore()
-
-    const modalConfigRef = computed(() => {
-      const departmentItem = modalConfig.formItems.find(
-        (item) => item.field === "departmentId"
-      )
-      departmentItem!.selectOptions = store.state.entireDepartment.map(
-        (item) => ({
-          label: item.name,
-          value: item.id
-        })
-      )
-
-      const roleItem = modalConfig.formItems.find(
-        (item) => item.field === "roleId"
-      )
-      roleItem!.selectOptions = store.state.entireRole.map((item) => ({
-        label: item.name,
-        value: item.id
-      }))
-
-      return modalConfig
-    })
+    const modalConfigRef = useConfig(
+      ["departmentId", "roleId"],
+      ["entireDepartment", "entireRole"],
+      modalConfig
+    )
 
     return {
       pageContentRef,

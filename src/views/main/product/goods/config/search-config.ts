@@ -15,6 +15,13 @@ export const searchFormConfig: IForm = {
       placeholder: "请输入地区"
     },
     {
+      field: "categoryId",
+      type: "select",
+      label: "商品类别",
+      placeholder: "请选择商品类别",
+      selectOptions: []
+    },
+    {
       field: "createAt",
       type: "datapicker",
       label: "创建时间",

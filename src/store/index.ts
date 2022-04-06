@@ -4,11 +4,13 @@ import type { IRootState, IStoreState } from "./type"
 
 import login from "./login/login"
 import system from "./main/system/system"
+import dashboard from "./main/analysis/dashboard"
 import { getPageListData } from "@/service/main/system/system"
 import {
   CHANGE_ENTIRE_DEPARTMENT,
   CHANGE_ENTIRE_ROLE,
-  CHANGE_ENTIRE_MENU
+  CHANGE_ENTIRE_MENU,
+  CHANGE_ENTIRE_CATEGORY
 } from "./root-mutation-type"
 
 const store = createStore<IRootState>({
@@ -16,7 +18,8 @@ const store = createStore<IRootState>({
     return {
       entireDepartment: [],
       entireRole: [],
-      entireMenu: []
+      entireMenu: [],
+      entireCategory: []
     }
   },
   actions: {
@@ -37,25 +40,35 @@ const store = createStore<IRootState>({
       let { list: menuList } = await getPageListData("/menu/list", {})
       menuList = menuList.filter((item: any) => item.id !== 41)
 
+      const { list: categoryList } = await getPageListData("/category/list", {
+        offset: 0,
+        size: 1000
+      })
+
       commit(CHANGE_ENTIRE_DEPARTMENT, departmentList)
       commit(CHANGE_ENTIRE_ROLE, roleList)
       commit(CHANGE_ENTIRE_MENU, menuList)
+      commit(CHANGE_ENTIRE_CATEGORY, categoryList)
     }
   },
   mutations: {
-    [CHANGE_ENTIRE_DEPARTMENT](state, departmentList) {
+    [CHANGE_ENTIRE_DEPARTMENT](state, departmentList: any[]) {
       state.entireDepartment = departmentList
     },
-    [CHANGE_ENTIRE_ROLE](state, roleList) {
+    [CHANGE_ENTIRE_ROLE](state, roleList: any[]) {
       state.entireRole = roleList
     },
-    [CHANGE_ENTIRE_MENU](state, menuList) {
+    [CHANGE_ENTIRE_MENU](state, menuList: any[]) {
       state.entireMenu = menuList
+    },
+    [CHANGE_ENTIRE_CATEGORY](state, categoryList: any[]) {
+      state.entireCategory = categoryList
     }
   },
   modules: {
     login,
-    system
+    system,
+    dashboard
   }
 })
 

@@ -20,6 +20,12 @@ export const contentTableConfig: ITable = {
       minWidth: "80"
     },
     {
+      prop: "categoryId",
+      label: "商品类别",
+      minWidth: "100",
+      slotName: "category"
+    },
+    {
       prop: "oldPrice",
       label: "原价",
       minWidth: "80",
@@ -43,7 +49,7 @@ export const contentTableConfig: ITable = {
     },
     {
       prop: "favorCount",
-      label: "喜欢",
+      label: "收藏",
       minWidth: "80"
     },
     {
