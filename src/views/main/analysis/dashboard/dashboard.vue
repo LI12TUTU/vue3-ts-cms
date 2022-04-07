@@ -1,6 +1,13 @@
 <template>
   <div class="dashboard">
     <el-row :gutter="10">
+      <template v-for="item in goodsAmountList" :key="item.title">
+        <el-col v-bind="colLayout3">
+          <statistical-panel :panelData="item"></statistical-panel>
+        </el-col>
+      </template>
+    </el-row>
+    <el-row :gutter="10" class="content-row">
       <el-col v-bind="colLayout1">
         <my-card title="分类商品数量(饼图)">
           <pie-echart :pieData="categoryGoodsCount"></pie-echart>
@@ -44,6 +51,8 @@ import {
   BarEchart,
   MapEchart
 } from "@/components/page-echarts"
+import StatisticalPanel from "@/components/statistical-panel"
+import { IPanelData } from "@/components/statistical-panel"
 
 export default defineComponent({
   name: "Dashboard",
@@ -53,7 +62,8 @@ export default defineComponent({
     RoseEchart,
     LineEchart,
     BarEchart,
-    MapEchart
+    MapEchart,
+    StatisticalPanel
   },
   setup() {
     const store = useStore()
@@ -73,6 +83,14 @@ export default defineComponent({
       md: 12,
       lg: 12,
       xl: 12
+    }
+
+    const colLayout3 = {
+      xs: 24,
+      sm: 24,
+      md: 12,
+      lg: 6,
+      xl: 6
     }
 
     const categoryGoodsCount = computed(() => {
@@ -117,13 +135,19 @@ export default defineComponent({
       }))
     })
 
+    const goodsAmountList = computed<IPanelData[]>(
+      () => store.state.dashboard.goodsAmountList
+    )
+
     return {
       categoryGoodsCount,
       categoryGoodsSale,
       categoryGoodsFavor,
       addressGoodsSale,
+      goodsAmountList,
       colLayout1,
-      colLayout2
+      colLayout2,
+      colLayout3
     }
   }
 })

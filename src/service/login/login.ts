@@ -1,5 +1,5 @@
 import { ryRequest, ryRequestShowLoading } from "../index"
-import type { IAccount, ILoginResult } from "./type"
+import type { IAccount, ILoginRequestRes } from "./type"
 
 enum LoginAPI {
   AccountLogin = "/login",
@@ -9,7 +9,7 @@ enum LoginAPI {
 }
 
 export function accountLoginRequest(account: IAccount) {
-  return ryRequest.post<ILoginResult>({
+  return ryRequest.post<ILoginRequestRes>({
     url: LoginAPI.AccountLogin,
     data: account
   })

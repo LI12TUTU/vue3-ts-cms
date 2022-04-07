@@ -32,6 +32,13 @@
     <el-button class="login-btn" type="primary" @click="handleLoginClick">
       立即登录
     </el-button>
+    <!-- <page-modal
+      ref="pageModalRef"
+      :pageName="pageName"
+      :dialogTitle="dialogTitle"
+      :modalConfig="modalConfig"
+      :defaultInfo="defaultInfo"
+    ></page-modal> -->
   </div>
 </template>
 
@@ -39,6 +46,8 @@
 import { defineComponent, ref } from "vue"
 import LoginAccount from "./login-account.vue"
 import LoginPhone from "./login-phone.vue"
+// import { modalConfig } from "../config/modal-config"
+// import { usePageModal } from "@/hooks/use-page-modal"
 
 export default defineComponent({
   name: "LoginPanel",
@@ -59,6 +68,14 @@ export default defineComponent({
         console.log(loginPhoneRef.value)
       }
     }
+
+    // const pageName = "user"
+    // const { pageModalRef, defaultInfo, dialogTitle, handleEditData } =
+    //   usePageModal(pageName)
+
+    // const handleForgetClick = () => {
+    //   handleEditData({ ...loginAccountRef.value?.account })
+    // }
 
     return {
       isKeepPassword,

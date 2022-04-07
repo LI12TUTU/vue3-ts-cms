@@ -6,13 +6,15 @@ import {
   getCategoryGoodsCount,
   getCategoryGoodsSale,
   getCategoryGoodsFavor,
-  getAddressGoodsSale
+  getAddressGoodsSale,
+  getGoodsAmountList
 } from "@/service/main/analysis/dashboard"
 import {
   CHANGE_CATEGORY_GOODS_FAVOR,
   CHANGE_CATEGORY_GOODS_SALE,
   CHANGE_ADDRESS_GOODS_SALE,
-  CHANGE_CATEGORY_GOODS_COUNT
+  CHANGE_CATEGORY_GOODS_COUNT,
+  CHANGE_GOODS_AMOUNT_LIST
 } from "./dashboard-mutation-type"
 
 const dashboardModule: Module<IDashboardState, IRootState> = {
@@ -22,7 +24,8 @@ const dashboardModule: Module<IDashboardState, IRootState> = {
       categoryGoodsCount: [],
       categoryGoodsSale: [],
       categoryGoodsFavor: [],
-      addressGoodsSale: []
+      addressGoodsSale: [],
+      goodsAmountList: []
     }
   },
   actions: {
@@ -35,20 +38,25 @@ const dashboardModule: Module<IDashboardState, IRootState> = {
       commit(CHANGE_CATEGORY_GOODS_FAVOR, categoryFavorResult)
       const addressSaleResult = await getAddressGoodsSale()
       commit(CHANGE_ADDRESS_GOODS_SALE, addressSaleResult)
+      const amountListResult = await getGoodsAmountList()
+      commit(CHANGE_GOODS_AMOUNT_LIST, amountListResult)
     }
   },
   mutations: {
-    [CHANGE_CATEGORY_GOODS_COUNT](state, categoryGoodsCount) {
+    [CHANGE_CATEGORY_GOODS_COUNT](state, categoryGoodsCount: any[]) {
       state.categoryGoodsCount = categoryGoodsCount
     },
-    [CHANGE_CATEGORY_GOODS_SALE](state, categoryGoodsSale) {
+    [CHANGE_CATEGORY_GOODS_SALE](state, categoryGoodsSale: any[]) {
       state.categoryGoodsSale = categoryGoodsSale
     },
-    [CHANGE_CATEGORY_GOODS_FAVOR](state, categoryGoodsFavor) {
+    [CHANGE_CATEGORY_GOODS_FAVOR](state, categoryGoodsFavor: any[]) {
       state.categoryGoodsFavor = categoryGoodsFavor
     },
-    [CHANGE_ADDRESS_GOODS_SALE](state, addressGoodsSale) {
+    [CHANGE_ADDRESS_GOODS_SALE](state, addressGoodsSale: any[]) {
       state.addressGoodsSale = addressGoodsSale
+    },
+    [CHANGE_GOODS_AMOUNT_LIST](state, goodsAmountList: any[]) {
+      state.goodsAmountList = goodsAmountList
     }
   }
 }

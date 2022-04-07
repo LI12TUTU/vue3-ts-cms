@@ -2,12 +2,14 @@ import { Module } from "vuex"
 import type { ILoginState } from "./type"
 import type { IRootState } from "../type"
 
+import { ElMessage } from "element-plus"
+
 import {
   accountLoginRequest,
   requestUserInfoById,
   requestUserMenusByRoleId
 } from "@/service/login/login"
-import type { IAccount } from "@/service/login/type"
+import type { IAccount, IDataType, ILoginResult } from "@/service/login/type"
 
 import {
   CHANGE_TOKEN,
@@ -38,9 +40,14 @@ const loginModule: Module<ILoginState, IRootState> = {
   actions: {
     async accountLoginAction({ commit, dispatch }, payload: IAccount) {
       const loginResult = await accountLoginRequest(payload)
-      const { id, token } = loginResult
+      if ((loginResult as IDataType).code) {
+        ElMessage.error("账号或密码错误")
+      }
+      const { id, token } = loginResult as ILoginResult
       commit(CHANGE_TOKEN, token)
       localCache.setItem(TOKEN_KEY, token)
+
+      ElMessage.success("登录成功")
 
       dispatch("getInitialDataAction", null, { root: true })
 

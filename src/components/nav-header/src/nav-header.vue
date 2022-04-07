@@ -8,14 +8,18 @@
       <div class="right">
         <div class="icons">
           <el-icon :size="20" class="icon">
-            <chat-dot-round />
+            <cloudy />
           </el-icon>
+          <span class="info">{{ weather.tem + "℃" }}</span>
           <el-icon :size="20" class="icon">
-            <collection-tag />
+            <location-information />
           </el-icon>
+          <span class="info">{{ weather.country + weather.city }}</span>
           <el-icon :size="20" class="icon">
-            <bell />
+            <calendar />
           </el-icon>
+          <span class="info">{{ weather.week }}</span>
+          <span class="info">{{ time }}</span>
         </div>
         <user-info />
       </div>
@@ -24,15 +28,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue"
+import { defineComponent, ref, computed, onMounted } from "vue"
 import { useRoute } from "vue-router"
 import { useStore } from "@/store"
+
+import axios from "axios"
 
 import MyBreadcrumb from "@/base-ui/breadcrumb"
 import UserInfo from "./user-info.vue"
 
 import { useScreen } from "../hooks/use-screen"
 import { mapPathToBreadcrumbs } from "@/utils/map-menus"
+import { formatTimestamp } from "@/utils/date-format"
 
 export default defineComponent({
   components: {
@@ -42,7 +49,6 @@ export default defineComponent({
   emits: ["foldChange"],
   setup(props, { emit }) {
     const isFold = useScreen(emit)
-
     const handleFoldClick = () => {
       isFold.value = !isFold.value
       emit("foldChange", isFold.value)
@@ -56,8 +62,32 @@ export default defineComponent({
       return mapPathToBreadcrumbs(userMenus, currentPath)
     })
 
+    const time = ref(formatTimestamp(new Date().getTime()))
+    onMounted(() => {
+      setInterval(() => {
+        time.value = formatTimestamp(new Date().getTime())
+      }, 1000)
+    })
+
+    const weather = ref<any>({
+      tem: "",
+      city: "",
+      country: "",
+      week: ""
+    })
+
+    axios
+      .get(
+        "https://v0.yiketianqi.com/api?unescape=1&version=v61&vue=1&appid=68497128&appsecret=Q2LCduLg"
+      )
+      .then((res) => {
+        weather.value = res.data
+      })
+
     return {
       isFold,
+      time,
+      weather,
       breadcrumbs,
       handleFoldClick
     }
@@ -93,8 +123,12 @@ export default defineComponent({
         display: flex;
         align-items: center;
         margin-right: 20px;
+        color: #777b82;
 
         .icon {
+          margin-right: 5px;
+        }
+        .info {
           margin-right: 20px;
         }
       }

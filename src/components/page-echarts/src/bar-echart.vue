@@ -22,6 +22,9 @@ const props = withDefaults(
 
 const options = computed(() => {
   return {
+    tooltip: {
+      trigger: "item"
+    },
     toolbox: {
       feature: {
         saveAsImage: { show: true }

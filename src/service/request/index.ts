@@ -71,7 +71,7 @@ class RyRequest {
       },
       (err) => {
         this.loading?.close()
-        ElMessage.error("请求失败")
+        ElMessage.error("密码错误")
         return err
       }
     )

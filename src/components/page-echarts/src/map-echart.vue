@@ -59,7 +59,8 @@ const options = computed(() => {
     },
     geo: {
       map: "china",
-      roam: "scale",
+      // 平移或者缩放 move or scale true为都开启
+      roam: true,
       emphasis: {
         areaColor: "#f4cccc",
         borderColor: "rgb(9, 54, 95)",
