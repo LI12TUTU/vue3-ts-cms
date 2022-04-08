@@ -19,3 +19,7 @@ export function formatTimestamp(
 ) {
   return dayjs(timestamp).locale("zh-cn").format(format)
 }
+
+export function formatExportExcel(format: string = DATE_TIME_FORMATE) {
+  return dayjs().format(format)
+}

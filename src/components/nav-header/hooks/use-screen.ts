@@ -4,6 +4,11 @@ import { debounce } from "@/utils/debounce"
 export function useScreen(emit: any) {
   const isFold = ref(false)
 
+  const handleFoldClick = () => {
+    isFold.value = !isFold.value
+    emit("foldChange", isFold.value)
+  }
+
   function changeMenu() {
     if (window.innerWidth < 768) {
       isFold.value = true
@@ -18,5 +23,8 @@ export function useScreen(emit: any) {
 
   window.addEventListener("resize", debounceChangeMenu)
 
-  return isFold
+  return {
+    isFold,
+    handleFoldClick
+  }
 }

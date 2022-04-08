@@ -1,4 +1,4 @@
-import MyForm from "./src/my-form.vue"
+import MyForm from "./src/form.vue"
 export * from "./types"
 
 export default MyForm

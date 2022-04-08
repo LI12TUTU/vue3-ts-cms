@@ -23,13 +23,15 @@ export const contentTableConfig: ITable = {
       prop: "createAt",
       label: "创建时间",
       minWidth: "230",
-      slotName: "create"
+      slotName: "create",
+      sortable: true
     },
     {
       prop: "updateAt",
       label: "更新时间",
       minWidth: "230",
-      slotName: "update"
+      slotName: "update",
+      sortable: true
     },
     {
       label: "操作",
@@ -37,6 +39,5 @@ export const contentTableConfig: ITable = {
       slotName: "handler"
     }
   ],
-  showColumnIndex: true,
-  showSelectColumn: true
+  showColumnIndex: true
 }

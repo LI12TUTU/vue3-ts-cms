@@ -1,10 +1,12 @@
 <template>
   <div class="page-content">
     <my-table
+      ref="myTableRef"
       v-bind="contentTableConfig"
       v-model:page="pageInfo"
       :listData="dataList"
       :listCount="dataCount"
+      :showSelectColumn="showSelectColumn"
       @selectionChange="handleSelectionChange"
     >
       <template #headerHandler>
@@ -13,9 +15,23 @@
             {{ createName }}
           </el-button>
           <el-button
-            v-if="isDelete && contentTableConfig.showSelectColumn"
+            v-if="showExportBtn"
+            type="primary"
+            @click="handleExportClick"
+          >
+            导出
+          </el-button>
+          <el-button
+            v-if="isDelete"
+            type="primary"
+            @click="handleSomeManageClick"
+          >
+            批量管理
+          </el-button>
+          <el-button
+            v-if="isDelete"
             type="danger"
-            @click="handleSomeClick"
+            @click="handleSomeDeleteClick"
           >
             批量删除
           </el-button>
@@ -78,6 +94,7 @@ import type { ITable } from "@/base-ui/table"
 import { usePermission } from "@/hooks/use-permission"
 import { useSelection } from "../hooks/use-selection"
 import { usePageData } from "../hooks/use-page-data"
+import { useExport } from "../hooks/use-export"
 
 export default defineComponent({
   components: {
@@ -95,6 +112,10 @@ export default defineComponent({
     createName: {
       type: String,
       required: true
+    },
+    showExportBtn: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ["newBtnClick", "editBtnClick"],
@@ -142,11 +163,19 @@ export default defineComponent({
 
     const { pageInfo, getPageData } = usePageData(props.pageName)
 
-    const { handleSelectionChange, handleSomeClick } = useSelection(
-      props.pageName
+    const {
+      showSelectColumn,
+      handleSomeManageClick,
+      handleSelectionChange,
+      handleSomeDeleteClick
+    } = useSelection(props.pageName)
+
+    const { myTableRef, handleExportClick } = useExport(
+      props.contentTableConfig?.title
     )
 
     return {
+      myTableRef,
       dataList,
       dataCount,
       pageInfo,
@@ -155,12 +184,15 @@ export default defineComponent({
       isUpdate,
       isDelete,
       isQuery,
+      showSelectColumn,
+      handleSomeManageClick,
       getPageData,
       handleDeleteClick,
       handleNewClick,
       handleEditClick,
-      handleSomeClick,
-      handleSelectionChange
+      handleSomeDeleteClick,
+      handleSelectionChange,
+      handleExportClick
     }
   }
 })

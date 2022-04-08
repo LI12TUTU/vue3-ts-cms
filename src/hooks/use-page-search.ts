@@ -7,6 +7,8 @@ import PageContent from "@/components/page-content"
 export function usePageSearch() {
   const store = useStore()
   const pageContentRef = ref<InstanceType<typeof PageContent>>()
+  // const sortField = ref<string>("")
+
   const handleResetClick = () => {
     if (!pageContentRef.value?.isQuery) return
     store.commit(`system/${CHANGE_QUERY_INFO}`, {})
@@ -22,9 +24,15 @@ export function usePageSearch() {
     ElMessage.success("查询成功")
   }
 
+  // const handleSortClick = (sort: string) => {
+  //   sortField.value = sort
+  // }
+
   return {
+    // sortField,
     pageContentRef,
     handleResetClick,
     handleQueryClick
+    // handleSortClick
   }
 }

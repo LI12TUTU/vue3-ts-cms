@@ -191,6 +191,10 @@ const systemModule: Module<ISystemState, IRootState> = {
       state.roleCount = roleCount
     },
     [CHANGE_GOOD_LIST](state, goodList: any[]) {
+      goodList.forEach((item) => {
+        item.newPrice = +item.newPrice
+        item.oldPrice = +item.oldPrice
+      })
       state.goodList = goodList
     },
     [CHANGE_GOOD_COUNT](state, goodCount: number) {

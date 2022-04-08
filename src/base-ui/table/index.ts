@@ -1,4 +1,4 @@
-import MyTable from "./src/my-table.vue"
+import MyTable from "./src/table.vue"
 
 export * from "./types"
 

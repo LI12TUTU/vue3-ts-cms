@@ -1,3 +1,3 @@
-import MyEchart from "./src/my-echart.vue"
+import MyEchart from "./src/echart.vue"
 
 export default MyEchart

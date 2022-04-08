@@ -10,6 +10,7 @@
     </div>
     <el-table
       v-bind="tableOptions"
+      class="table-data"
       style="width: 100%"
       :data="listData"
       @selection-change="handleSelectionChange"
@@ -54,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue"
+import { defineComponent, PropType, onMounted, ref } from "vue"
 
 export default defineComponent({
   props: {
@@ -115,7 +116,20 @@ export default defineComponent({
     const handleSizeChange = (pageSize: number) => {
       emit("update:page", { ...props.page, pageSize })
     }
+
+    // 定义一个ref,mounted之后拿到DOM节点
+    // let tableEl = null 之后在赋值不会改变实例上拿到的值
+    const tableEl = ref<Element | null>()
+    onMounted(() => {
+      tableEl.value = document.querySelector(".table-data")
+    })
+
+    // 排序字段
+    // const sortField = inject("sortField")
+    // console.log(sortField)
+
     return {
+      tableEl,
       handleSelectionChange,
       handleCurrentChange,
       handleSizeChange

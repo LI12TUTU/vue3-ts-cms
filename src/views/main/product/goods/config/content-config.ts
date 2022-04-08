@@ -29,40 +29,47 @@ export const contentTableConfig: ITable = {
       prop: "oldPrice",
       label: "原价",
       minWidth: "80",
-      slotName: "oldPrice"
+      slotName: "oldPrice",
+      sortable: true
     },
     {
       prop: "newPrice",
       label: "现价",
       minWidth: "80",
-      slotName: "newPrice"
+      slotName: "newPrice",
+      sortable: true
     },
     {
       prop: "inventoryCount",
       label: "库存",
-      minWidth: "80"
+      minWidth: "80",
+      sortable: true
     },
     {
       prop: "saleCount",
       label: "已售",
-      minWidth: "80"
+      minWidth: "80",
+      sortable: true
     },
     {
       prop: "favorCount",
       label: "收藏",
-      minWidth: "80"
+      minWidth: "80",
+      sortable: true
     },
     {
       prop: "createAt",
       label: "创建时间",
       minWidth: "230",
-      slotName: "create"
+      slotName: "create",
+      sortable: true
     },
     {
       prop: "updateAt",
       label: "更新时间",
       minWidth: "230",
-      slotName: "update"
+      slotName: "update",
+      sortable: true
     },
     {
       label: "操作",

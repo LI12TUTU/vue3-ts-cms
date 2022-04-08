@@ -27,7 +27,7 @@
     </el-tabs>
     <div class="account-control">
       <el-checkbox v-model="isKeepPassword">记住密码</el-checkbox>
-      <el-link type="primary">忘记密码</el-link>
+      <el-link type="primary" @click="handleForgetClick">忘记密码</el-link>
     </div>
     <el-button class="login-btn" type="primary" @click="handleLoginClick">
       立即登录
@@ -44,6 +44,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue"
+import { ElMessage } from "element-plus"
 import LoginAccount from "./login-account.vue"
 import LoginPhone from "./login-phone.vue"
 // import { modalConfig } from "../config/modal-config"
@@ -73,16 +74,17 @@ export default defineComponent({
     // const { pageModalRef, defaultInfo, dialogTitle, handleEditData } =
     //   usePageModal(pageName)
 
-    // const handleForgetClick = () => {
-    //   handleEditData({ ...loginAccountRef.value?.account })
-    // }
+    const handleForgetClick = () => {
+      ElMessage.warning("请联系管理员修改密码")
+    }
 
     return {
       isKeepPassword,
       loginAccountRef,
       loginPhoneRef,
       currentTab,
-      handleLoginClick
+      handleLoginClick,
+      handleForgetClick
     }
   }
 })

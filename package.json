@@ -21,7 +21,8 @@
     "normalize.css": "^8.0.1",
     "vue": "^3.2.13",
     "vue-router": "^4.0.13",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",

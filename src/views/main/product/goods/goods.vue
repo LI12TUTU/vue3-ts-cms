@@ -23,12 +23,12 @@
           lazy
         ></el-image>
       </template>
-      <template #oldPrice="scope">
-        {{ "￥" + scope.row.oldPrice }}
+      <!-- <template #oldPrice="scope">
+        {{ +scope.row.oldPrice }}
       </template>
       <template #newPrice="scope">
-        {{ "￥" + scope.row.newPrice }}
-      </template>
+        {{ typeof +scope.row.newPrice }}
+      </template> -->
       <template #category="scope">
         {{ formatCategory(scope.row.categoryId) }}
       </template>
@@ -69,6 +69,8 @@ export default defineComponent({
 
     const { pageContentRef, handleResetClick, handleQueryClick } =
       usePageSearch()
+
+    // provide("sortField", readonly(sortField))
 
     const {
       pageModalRef,

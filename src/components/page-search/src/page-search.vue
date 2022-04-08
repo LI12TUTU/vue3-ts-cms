@@ -3,10 +3,18 @@
     <my-form v-bind="searchFormConfig" v-model="formData">
       <template #footer>
         <div class="handle-btns">
+          <!-- <el-button
+            v-if="showSortBtn"
+            icon="sort"
+            type="primary"
+            @click="handleSortClick"
+          >
+            排序
+          </el-button> -->
           <el-button icon="refresh" type="success" @click="handleResetClick">
             重置
           </el-button>
-          <el-button type="primary" icon="search" @click="handleQueryClick">
+          <el-button icon="search" type="primary" @click="handleQueryClick">
             搜索
           </el-button>
         </div>
@@ -29,6 +37,10 @@ export default defineComponent({
       type: Object as PropType<IForm>,
       required: true
     }
+    // showSortBtn: {
+    //   type: Boolean,
+    //   default: false
+    // }
   },
   emits: ["resetBtnClick", "queryBtnClick"],
   setup(props, { emit }) {
@@ -51,6 +63,10 @@ export default defineComponent({
     const handleQueryClick = () => {
       emit("queryBtnClick", formData.value)
     }
+
+    // const handleSortClick = () => {
+    //   emit("sortBtnClick", formData.value["sort"])
+    // }
 
     return {
       formData,

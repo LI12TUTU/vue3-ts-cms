@@ -48,11 +48,7 @@ export default defineComponent({
   },
   emits: ["foldChange"],
   setup(props, { emit }) {
-    const isFold = useScreen(emit)
-    const handleFoldClick = () => {
-      isFold.value = !isFold.value
-      emit("foldChange", isFold.value)
-    }
+    const { isFold, handleFoldClick } = useScreen(emit)
 
     const store = useStore()
     const breadcrumbs = computed(() => {

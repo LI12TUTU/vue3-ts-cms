@@ -7,7 +7,9 @@
       <el-form-item class="form-item" label="验证码" prop="code">
         <div class="code">
           <el-input v-model="phone.code" placeholder="请输入验证码"></el-input>
-          <el-button class="code-btn" type="primary">获取验证码</el-button>
+          <el-button class="code-btn" type="primary" @click="handleCodeClick">
+            获取验证码
+          </el-button>
         </div>
       </el-form-item>
     </el-form>
@@ -16,6 +18,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue"
+import { ElMessage } from "element-plus"
 import rules from "../config/phone-config"
 
 export default defineComponent({
@@ -26,9 +29,14 @@ export default defineComponent({
       code: ""
     })
 
+    const handleCodeClick = () => {
+      ElMessage.info("手机登录功能暂未开发~")
+    }
+
     return {
       phone,
-      rules
+      rules,
+      handleCodeClick
     }
   }
 })

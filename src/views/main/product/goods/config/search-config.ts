@@ -32,5 +32,33 @@ export const searchFormConfig: IForm = {
         unlinkPanels: true
       }
     }
+    // {
+    //   field: "sort",
+    //   type: "select",
+    //   label: "排序",
+    //   placeholder: "请选择排序字段",
+    //   selectOptions: [
+    //     {
+    //       label: "原价",
+    //       value: "oldPrice"
+    //     },
+    //     {
+    //       label: "现价",
+    //       value: "newPrice"
+    //     },
+    //     {
+    //       label: "库存",
+    //       value: "inventoryCount"
+    //     },
+    //     {
+    //       label: "已售",
+    //       value: "saleCount"
+    //     },
+    //     {
+    //       label: "收藏",
+    //       value: "favorCount"
+    //     }
+    //   ]
+    // }
   ]
 }
