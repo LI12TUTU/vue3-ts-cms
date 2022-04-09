@@ -8,13 +8,14 @@ export function useSelection(pageName: string) {
   //是否展示选择框
   const showSelectColumn = ref(false)
   const handleSomeManageClick = () => {
-    showSelectColumn.value = !showSelectColumn.value
+    showSelectColumn.value = true
   }
   //保存表格中选中的行
   const handleSelectionChange = (selectValue: any[]) => {
     selectInfo.value = selectValue
   }
   const handleSomeDeleteClick = () => {
+    showSelectColumn.value = false
     selectInfo.value?.forEach((item) => {
       store.dispatch("system/deletePageDataAction", {
         pageName: pageName,

@@ -2,7 +2,9 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-      <span v-show="!collapse" class="title">Vue3+TS</span>
+      <transition name="title">
+        <span v-show="!collapse" class="title">商品信息系统</span>
+      </transition>
     </div>
     <el-menu
       class="el-menu-vertical"
@@ -107,9 +109,20 @@ export default defineComponent({
     }
 
     .title {
+      display: inline-block;
+      min-width: 100px;
       font-size: 16px;
       font-weight: 700;
       color: white;
+    }
+    .title-enter-from,
+    .title-leave-to {
+      opacity: 0;
+    }
+
+    .title-enter-active,
+    .title-leave-active {
+      transition: opacity 1s ease;
     }
   }
 
