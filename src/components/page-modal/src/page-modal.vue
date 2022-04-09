@@ -76,7 +76,7 @@ export default defineComponent({
       let isValid
       try {
         // 拿到表单验证结果，验证不通过就不发送网络请求
-        isValid = await myFormRef.value?.confimAction()
+        isValid = await myFormRef.value?.validAction()
       } catch (err) {
         return
       }

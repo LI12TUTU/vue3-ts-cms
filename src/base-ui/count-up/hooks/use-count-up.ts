@@ -10,6 +10,18 @@ const defaultOptions: CountUpOptions = {
   prefix: "￥" // 单位
 }
 
+/**
+ *
+ * useCountup(counter, number, options)
+ * @param {Ref<HTMLElement | undefined>} counter 显示递增动画的容器
+ * @param {number} number 递增的数字
+ * @param {CountUpOptions} options 递增选项
+ * @returns {
+ *  createCounter {Function} 创建一个countup实例，开启数字递增动画
+ *  update {Function} 数字发生变化，调用update执行动画
+ * }
+ */
+
 export default function (
   counter: Ref<HTMLElement | undefined>,
   number: number,

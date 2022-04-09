@@ -113,9 +113,24 @@ export default defineComponent({
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
+    /**
+     * 子组件需要将v-model的值再次v-model给el-form-item，formItem里面的值改变会修改父组件的值
+     * computed方式 子组件某个属性发生修改不会触发set，因此不会把新值设置回去，父组件的值不会改变
+     * const formData = computed({
+     *  get() {
+     *    return props.modelValue
+     *  },
+     *  set(newValue) {
+     *    emit("update:modelValue", newValue)
+     *  }
+     * }
+     */
     //#region
+    // watch的方式 子组件某个属性发生修改可以触发handler，但是父组件实际上指向的也是子组件中的ref对象
     // const formData = ref({ ...props.modelValue })
-
+    //  watch(() => props.modelValue, () => {
+    //    FormData.value = { ...props.modelValue }
+    //  })
     // watch(
     //   formData,
     //   (newValue) => {
@@ -131,7 +146,7 @@ export default defineComponent({
     //#endregion
 
     const ElFormRef = ref<InstanceType<typeof ElForm>>()
-    const confimAction = () => {
+    const validAction = () => {
       const validPromise = ElFormRef.value?.validate()
       return validPromise
     }
@@ -142,7 +157,7 @@ export default defineComponent({
 
     return {
       ElFormRef,
-      confimAction,
+      validAction,
       handleValueChange
     }
   }
