@@ -42,7 +42,7 @@ npm run commit
 
 props：
 
-| breadumbs:  IBreadcrumb[]          | 面包屑路径   | default: []                                            |
+| breadumbs: IBreadcrumb[]           | 面包屑路径   | default: []                                            |
 | ---------------------------------- | ------------ | ------------------------------------------------------ |
 | separatorOptions: ISeparatorOption | 面包屑分割符 | default：{ separator: "", separatorIcon: "ArrowRight"} |
 
@@ -52,7 +52,7 @@ interface IBreadcrumb {
   name: string // 面包屑路径
   path?: string // 面包屑跳转路由
 }
-  
+
 interface ISeparatorOption {
   separator?: string // 面包屑分隔符
   separatorIcon?: string // 面包屑分割图标
