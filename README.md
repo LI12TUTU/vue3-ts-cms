@@ -125,10 +125,10 @@ hooks
 
 [el-descriptions](https://element-plus.gitee.io/zh-CN/component/descriptions.html#%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95)
 
-| title: string               | 描述列表的标题           | default：“” |
-| --------------------------- | ------------------------ | ----------- |
-| column: number              | 列表一行显示几列描述item | default：1  |
-| tableData：IDescriptionProp | 列表的描述item数据       | default：[] |
+| title: string               | 描述列表的标题            | default：“” |
+| --------------------------- | ------------------------- | ----------- |
+| column: number              | 列表一行显示几列描述 item | default：1  |
+| tableData：IDescriptionProp | 列表的描述 item 数据      | default：[] |
 
 types
 
@@ -137,19 +137,18 @@ interface IDescriptionProp {
   name: string // 描述item的label值
   description: string // 描述item的内容
 }
-
 ```
 
-#### echart(echarts图表组件)
+#### echart(echarts 图表组件)
 
 [echarts](https://echarts.apache.org/zh/index.html)
 
 props
 
-| options：EchartsOption | echarts配置选项，参看echarts配置 | 没有默认值       |
-| ---------------------- | -------------------------------- | ---------------- |
-| width：string          | 图表容器宽度                     | default：“100%”  |
-| height：string         | 图表容器高度                     | default：“360px” |
+| options：EchartsOption | echarts 配置选项，参看 echarts 配置 | 没有默认值       |
+| ---------------------- | ----------------------------------- | ---------------- |
+| width：string          | 图表容器宽度                        | default：“100%”  |
+| height：string         | 图表容器高度                        | default：“360px” |
 
 hooks
 
@@ -178,17 +177,17 @@ hooks
 
 [el-datapicker](https://element-plus.gitee.io/zh-CN/component/date-picker.html)
 
-**v-model 表单元素双向绑定的值对象，key需要与formItems的field值一致**
+**v-model 表单元素双向绑定的值对象，key 需要与 formItems 的 field 值一致**
 
 props
 
-| formOptions：ElFormOptions | ElForm的配置选项               | default：{}                                             |
-| -------------------------- | ------------------------------ | ------------------------------------------------------- |
-| formItems：IFormItem[]     | 表单元素配置选项               | default：[]                                             |
-| labelWidth:  string        | 表单元素的label宽度            | default：“100px”                                        |
-| itemStyle: object          | 表单item的样式                 | default：{ padding: "10px 20px" }                       |
-| colLayout: object          | 表单元素的布局，参考el-col配置 | default：{ xl： 6， lg： 8， md： 12，sm:  24, xs: 24 } |
-| showFormPadding: boolean   | 是否显示form的默认padding      | default：true                                           |
+| formOptions：ElFormOptions | ElForm 的配置选项                | default：{}                                            |
+| -------------------------- | -------------------------------- | ------------------------------------------------------ |
+| formItems：IFormItem[]     | 表单元素配置选项                 | default：[]                                            |
+| labelWidth: string         | 表单元素的 label 宽度            | default：“100px”                                       |
+| itemStyle: object          | 表单 item 的样式                 | default：{ padding: "10px 20px" }                      |
+| colLayout: object          | 表单元素的布局，参考 el-col 配置 | default：{ xl： 6， lg： 8， md： 12，sm: 24, xs: 24 } |
+| showFormPadding: boolean   | 是否显示 form 的默认 padding     | default：true                                          |
 
 types
 
@@ -215,9 +214,9 @@ interface IFormItem {
 
 methods
 
-| validAction | 拿到表单验证结果 | 返回值：promise，promise的结果为表单验证结果，当表单无输入内容时抛出异常 |
-| ----------- | ---------------- | ------------------------------------------------------------ |
-|             |                  |                                                              |
+| validAction | 拿到表单验证结果 | 返回值：promise，promise 的结果为表单验证结果，当表单无输入内容时抛出异常 |
+| ----------- | ---------------- | ------------------------------------------------------------------------- |
+|             |                  |                                                                           |
 
 slots
 
@@ -230,24 +229,24 @@ slots
 [el-table](https://element-plus.gitee.io/zh-CN/component/table.html)
 
 ```typescript
-v-model:page=“{ 
+v-model:page=“{
   							currentPage: 1 // 当前页
-               	pageSize: 10 // 页面数据总数 
-              }” 
-表尾分页器的分页信息 
+               	pageSize: 10 // 页面数据总数
+              }”
+表尾分页器的分页信息
 ```
 
 props
 
-| title： string            | 表头标题                                                     | default：“”              |
-| ------------------------- | ------------------------------------------------------------ | :----------------------- |
-| listData： any[]          | 表格数据                                                     | 必传属性                 |
-| listCount： number        | 数据总数，用于表尾分页器                                     | default： 0              |
-| propList：any[]           | 表格列的配置选项，参考el-table-column配置,除了el-table-column配置选项外，可以额外传递一个slotName属性用以决定当前列的插槽名，自定义表格列内容的显示 | default：[]              |
-| showColumIndex：boolean   | 是否显示序号列                                               | default： false          |
-| showSelectColumn：boolean | 是否显示选择框列                                             | default：false           |
-| tableOptions：any         | 表格配置选项，参考el-table配置                               | default：{ border：true} |
-| showFooter：boolean       | 是否显示表尾分页器                                           | default：true            |
+| title： string            | 表头标题                                                                                                                                                  | default：“”              |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------- |
+| listData： any[]          | 表格数据                                                                                                                                                  | 必传属性                 |
+| listCount： number        | 数据总数，用于表尾分页器                                                                                                                                  | default： 0              |
+| propList：any[]           | 表格列的配置选项，参考 el-table-column 配置,除了 el-table-column 配置选项外，可以额外传递一个 slotName 属性用以决定当前列的插槽名，自定义表格列内容的显示 | default：[]              |
+| showColumIndex：boolean   | 是否显示序号列                                                                                                                                            | default： false          |
+| showSelectColumn：boolean | 是否显示选择框列                                                                                                                                          | default：false           |
+| tableOptions：any         | 表格配置选项，参考 el-table 配置                                                                                                                          | default：{ border：true} |
+| showFooter：boolean       | 是否显示表尾分页器                                                                                                                                        | default：true            |
 
 emits
 
@@ -257,15 +256,14 @@ emits
 
 slots
 
-| slotName：header        | 表头插槽，自定义表头插槽内容         | 默认值：显示标题和按钮             |
-| ----------------------- | ------------------------------------ | ---------------------------------- |
-| slotName：headerHandler | 表头内的按钮插槽                     | 没有默认值                         |
-| slotName：footer        | 表尾插槽，自定义表尾内容             | 默认值：分页器                     |
-| 动态插槽                | propList传递的插槽，自定义表格列内容 | 默认值：显示当前表格数据对应列的值 |
+| slotName：header        | 表头插槽，自定义表头插槽内容          | 默认值：显示标题和按钮             |
+| ----------------------- | ------------------------------------- | ---------------------------------- |
+| slotName：headerHandler | 表头内的按钮插槽                      | 没有默认值                         |
+| slotName：footer        | 表尾插槽，自定义表尾内容              | 默认值：分页器                     |
+| 动态插槽                | propList 传递的插槽，自定义表格列内容 | 默认值：显示当前表格数据对应列的值 |
 
 组件实例属性
 
-| tableEl | el-table的根节点，用以excel导出 |
-| ------- | ------------------------------- |
-|         |                                 |
-
+| tableEl | el-table 的根节点，用以 excel 导出 |
+| ------- | ---------------------------------- |
+|         |                                    |
