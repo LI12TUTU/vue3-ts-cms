@@ -7,7 +7,6 @@ export const projectDir = `
 │  .prettierrc
 │  auto-imports.d.ts
 │  babel.config.js
-│  cms.txt
 │  commitlint.config.js
 │  components.d.ts
 │  package-lock.json

@@ -53,6 +53,29 @@ export const modalConfig: IForm = {
       ]
     },
     {
+      field: "enable",
+      type: "select",
+      label: "状态",
+      placeholder: "请选择用户状态",
+      rules: [
+        {
+          required: true,
+          message: "必须选择用户状态",
+          trigger: "blur"
+        }
+      ],
+      selectOptions: [
+        {
+          label: "启用",
+          value: 1
+        },
+        {
+          label: "禁用",
+          value: 0
+        }
+      ]
+    },
+    {
       field: "cellphone",
       type: "input",
       label: "电话号码",

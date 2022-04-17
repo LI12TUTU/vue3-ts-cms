@@ -114,6 +114,7 @@ export default defineComponent({
 
     .right {
       display: flex;
+      min-width: 600px;
 
       .icons {
         display: flex;

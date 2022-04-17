@@ -49,6 +49,15 @@ const store = createStore<IRootState>({
       commit(CHANGE_ENTIRE_ROLE, roleList)
       commit(CHANGE_ENTIRE_MENU, menuList)
       commit(CHANGE_ENTIRE_CATEGORY, categoryList)
+    },
+    clearStoreDataAction({ commit, dispatch }) {
+      commit(CHANGE_ENTIRE_DEPARTMENT, [])
+      commit(CHANGE_ENTIRE_ROLE, [])
+      commit(CHANGE_ENTIRE_MENU, [])
+      commit(CHANGE_ENTIRE_CATEGORY, [])
+      dispatch("login/clearLoginModuleDataAction")
+      dispatch("system/clearSystemModuleDataAction")
+      dispatch("dashboard/clearDashboardModuleDataAction")
     }
   },
   mutations: {
@@ -73,7 +82,7 @@ const store = createStore<IRootState>({
 })
 
 export function setupStore() {
-  store.dispatch("login/loadLocalLogin")
+  store.dispatch("login/loadLocalLoginAction")
   // store.dispatch("getInitialDataAction")
 }
 

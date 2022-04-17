@@ -37,9 +37,12 @@ export default defineComponent({
     const name = computed(() => store.state.login.userInfo.name)
     const handleExitLoginClick = () => {
       router.push("/login")
+      // 清空缓存
       localCache.removeItem(TOKEN_KEY)
       localCache.removeItem(USER_INFO_KEY)
       localCache.removeItem(USER_MENUS_KEY)
+      // 清空store数据
+      store.dispatch("clearStoreDataAction")
     }
     return {
       name,

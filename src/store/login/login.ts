@@ -14,7 +14,8 @@ import type { IAccount, IDataType, ILoginResult } from "@/service/login/type"
 import {
   CHANGE_TOKEN,
   CHANGE_USER_INFO,
-  CHANGE_USER_MENUS
+  CHANGE_USER_MENUS,
+  CHANGE_PERMISSIONS
 } from "./login-mutation-type"
 
 import { localCache } from "@/utils/cache"
@@ -62,7 +63,7 @@ const loginModule: Module<ILoginState, IRootState> = {
 
       router.push("/main")
     },
-    loadLocalLogin({ commit, dispatch }) {
+    loadLocalLoginAction({ commit, dispatch }) {
       const token = localCache.getItem(TOKEN_KEY)
       if (token) {
         commit(CHANGE_TOKEN, token)
@@ -78,6 +79,12 @@ const loginModule: Module<ILoginState, IRootState> = {
       if (userMenus) {
         commit(CHANGE_USER_MENUS, userMenus)
       }
+    },
+    clearLoginModuleDataAction({ commit }) {
+      commit(CHANGE_TOKEN, "")
+      commit(CHANGE_USER_INFO, {})
+      commit(CHANGE_USER_MENUS, [])
+      commit(CHANGE_PERMISSIONS, [])
     }
   },
   mutations: {
@@ -89,12 +96,17 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     [CHANGE_USER_MENUS](state, userMenus: any) {
       state.userMenus = userMenus
-      const routes = mapMenusToRoutes(userMenus)
-      routes.forEach((route) => {
-        router.addRoute("main", route)
-      })
+      if (userMenus.length) {
+        const routes = mapMenusToRoutes(userMenus)
+        routes.forEach((route) => {
+          router.addRoute("main", route)
+        })
 
-      const permissions = mapMenusToPermissions(userMenus)
+        const permissions = mapMenusToPermissions(userMenus)
+        state.permissions = permissions
+      }
+    },
+    [CHANGE_PERMISSIONS](state, permissions: string[]) {
       state.permissions = permissions
     }
   }

@@ -73,7 +73,7 @@ class RyRequest {
         this.loading?.close()
 
         if (err.message.includes("400")) {
-          ElMessage.error("密码错误")
+          ElMessage.error("密码错误或用户名错误")
         } else {
           ElMessage.error("请求失败")
         }

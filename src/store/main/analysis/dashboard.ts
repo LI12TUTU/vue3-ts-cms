@@ -40,6 +40,13 @@ const dashboardModule: Module<IDashboardState, IRootState> = {
       commit(CHANGE_ADDRESS_GOODS_SALE, addressSaleResult)
       const amountListResult = await getGoodsAmountList()
       commit(CHANGE_GOODS_AMOUNT_LIST, amountListResult)
+    },
+    clearDashboardModuleDataAction({ commit }) {
+      commit(CHANGE_CATEGORY_GOODS_COUNT, [])
+      commit(CHANGE_CATEGORY_GOODS_SALE, [])
+      commit(CHANGE_CATEGORY_GOODS_FAVOR, [])
+      commit(CHANGE_ADDRESS_GOODS_SALE, [])
+      commit(CHANGE_GOODS_AMOUNT_LIST, [])
     }
   },
   mutations: {

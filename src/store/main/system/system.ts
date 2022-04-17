@@ -175,6 +175,26 @@ const systemModule: Module<ISystemState, IRootState> = {
         }
       })
       ElMessage.success(`${changeName}成功`)
+    },
+
+    clearSystemModuleDataAction({ commit }) {
+      commit(CHANGE_USER_LIST, [])
+      commit(CHANGE_USER_COUNT, 0)
+      commit(CHANGE_DEPARTMENT_LIST, [])
+      commit(CHANGE_DEPARTMENT_COUNT, 0)
+      commit(CHANGE_ROLE_LIST, [])
+      commit(CHANGE_ROLE_COUNT, 0)
+      commit(CHANGE_MENU_LIST, [])
+      commit(CHANGE_MENU_COUNT, 0)
+      commit(CHANGE_GOOD_LIST, [])
+      commit(CHANGE_GOOD_COUNT, 0)
+      commit(CHANGE_CATEGORY_LIST, [])
+      commit(CHANGE_CATEGORY_COUNT, 0)
+      commit(CHANGE_QUERY_INFO, {})
+      commit(CHANGE_PAGE_INFO, {
+        currentPage: 1,
+        pageSize: 10
+      })
     }
   },
   mutations: {

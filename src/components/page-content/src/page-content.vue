@@ -11,30 +11,32 @@
     >
       <template #headerHandler>
         <slot name="header">
-          <el-button v-if="isCreate" type="primary" @click="handleNewClick">
-            {{ createName }}
-          </el-button>
-          <el-button
-            v-if="showExportBtn"
-            type="primary"
-            @click="handleExportClick"
-          >
-            导出
-          </el-button>
-          <el-button
-            v-if="isDelete"
-            type="primary"
-            @click="handleSomeManageClick"
-          >
-            批量管理
-          </el-button>
-          <el-button
-            v-if="isDelete"
-            type="danger"
-            @click="handleSomeDeleteClick"
-          >
-            批量删除
-          </el-button>
+          <div class="btn-container">
+            <el-button v-if="isCreate" type="primary" @click="handleNewClick">
+              {{ createName }}
+            </el-button>
+            <el-button
+              v-if="showExportBtn"
+              type="primary"
+              @click="handleExportClick"
+            >
+              导出
+            </el-button>
+            <el-button
+              v-if="isDelete"
+              type="primary"
+              @click="handleSomeManageClick"
+            >
+              批量管理
+            </el-button>
+            <el-button
+              v-if="isDelete"
+              type="danger"
+              @click="handleSomeDeleteClick"
+            >
+              批量删除
+            </el-button>
+          </div>
         </slot>
       </template>
       <template #status="scope">
@@ -83,6 +85,31 @@
         <slot :name="item.slotName" :row="scope.row"></slot>
       </template>
     </my-table>
+    <el-dialog
+      v-model="dialogVisible"
+      title="提示"
+      top="30vh"
+      width="20%"
+      center
+      show-close
+      append-to-body
+      destroy-on-close
+    >
+      <div class="dialog-content">
+        <el-icon class="warning-icon" color="#e6a23c" :size="20">
+          <warning-filled />
+        </el-icon>
+        <span>是否删除数据？</span>
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="handleConfimClick">
+            确定
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -146,13 +173,6 @@ export default defineComponent({
       return true
     })
 
-    const handleDeleteClick = (item: any) => {
-      store.dispatch("system/deletePageDataAction", {
-        pageName: props.pageName,
-        id: item.id
-      })
-    }
-
     const handleNewClick = () => {
       emit("newBtnClick")
     }
@@ -164,10 +184,13 @@ export default defineComponent({
     const { pageInfo, getPageData } = usePageData(props.pageName)
 
     const {
+      dialogVisible,
       showSelectColumn,
+      handleDeleteClick,
       handleSomeManageClick,
       handleSelectionChange,
-      handleSomeDeleteClick
+      handleSomeDeleteClick,
+      handleConfimClick
     } = useSelection(props.pageName)
 
     const { myTableRef, handleExportClick } = useExport(
@@ -185,6 +208,7 @@ export default defineComponent({
       isDelete,
       isQuery,
       showSelectColumn,
+      dialogVisible,
       handleSomeManageClick,
       getPageData,
       handleDeleteClick,
@@ -192,7 +216,8 @@ export default defineComponent({
       handleEditClick,
       handleSomeDeleteClick,
       handleSelectionChange,
-      handleExportClick
+      handleExportClick,
+      handleConfimClick
     }
   }
 })
@@ -208,5 +233,20 @@ export default defineComponent({
 
 .delete-btn {
   color: red;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 400px;
+}
+
+.dialog-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .warning-icon {
+    margin-right: 5px;
+  }
 }
 </style>

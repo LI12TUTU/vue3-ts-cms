@@ -41,6 +41,7 @@
     <div class="my-table-footer" v-if="showFooter">
       <slot name="footer">
         <el-pagination
+          class="footer-pagination"
           :currentPage="page.currentPage"
           :page-size="page.pageSize"
           :page-sizes="[10, 20, 30]"
@@ -147,6 +148,7 @@ export default defineComponent({
   align-items: center;
 
   .title {
+    min-width: 100px;
     font-size: 20px;
     font-weight: 700;
   }
@@ -162,6 +164,7 @@ export default defineComponent({
   .el-pagination {
     display: flex;
     justify-content: flex-end;
+    min-width: 500px;
   }
 }
 </style>
