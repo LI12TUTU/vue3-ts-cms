@@ -1,5 +1,6 @@
 <template>
   <div class="page-content">
+    <!-- 使用表格组件 -->
     <my-table
       ref="myTableRef"
       v-bind="contentTableConfig"
@@ -9,8 +10,11 @@
       :showSelectColumn="showSelectColumn"
       @selectionChange="handleSelectionChange"
     >
+      <!-- 自定义插槽内容 -->
       <template #headerHandler>
+        <!-- 公共组件预留插槽，外部可自定义 -->
         <slot name="header">
+          <!-- 插槽默认内容 -->
           <div class="btn-container">
             <el-button v-if="isCreate" type="primary" @click="handleNewClick">
               {{ createName }}
@@ -39,6 +43,7 @@
           </div>
         </slot>
       </template>
+      <!-- 自定义插槽内容 -->
       <template #status="scope">
         <el-button
           plain
@@ -48,12 +53,15 @@
           {{ scope.row.enable ? "启用" : "禁用" }}
         </el-button>
       </template>
+      <!-- 自定义插槽内容 -->
       <template #create="scope">
         <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
       </template>
+      <!-- 自定义插槽内容 -->
       <template #update="scope">
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
+      <!-- 自定义插槽内容 -->
       <template #handler="scope">
         <div>
           <el-button
@@ -77,6 +85,7 @@
           </el-button>
         </div>
       </template>
+      <!-- 剩余动态插槽，由外部自定义 -->
       <template
         v-for="item in otherPropSlots"
         :key="item.prop"

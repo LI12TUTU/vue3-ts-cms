@@ -7,12 +7,15 @@
       @newBtnClick="handleNewData"
       @editBtnClick="handleEditData"
     >
+      <!-- 自定义插槽内容 -->
       <template #permission="scope">
-        {{ scope.row.permission ? "有权限" : "" }}
+        {{ formatPermission(scope.row) }}
       </template>
+      <!-- 自定义插槽内容 -->
       <template #menuType="scope">
         {{ formatMenuType(scope.row.type) }}
       </template>
+      <!-- 自定义插槽内容 -->
       <template #parentMenu="scope">
         {{ formatParentMenu(scope.row.parentId) }}
       </template>
@@ -43,6 +46,7 @@ export default defineComponent({
     const pageName = "menu"
     const store = useStore()
     const menuList = computed(() => store.state.entireMenu)
+    const premissions = computed(() => store.state.login.permissions)
     const menuValue = ref({})
 
     const {
@@ -53,6 +57,15 @@ export default defineComponent({
       handleNewData,
       handleEditData
     } = usePageModal(pageName)
+
+    const formatPermission = (item: any) => {
+      if (item.type === 1 || item.type === 2) return
+      const findItem = premissions.value.find(
+        (premission) => item.permission === premission
+      )
+
+      return findItem ? "有权限" : "无权限"
+    }
 
     const formatMenuType = (type: number) => {
       switch (type) {
@@ -91,6 +104,7 @@ export default defineComponent({
       menuList,
       handleNewData,
       handleEditData,
+      formatPermission,
       formatMenuType,
       formatParentMenu
     }

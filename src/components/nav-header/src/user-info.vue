@@ -23,6 +23,7 @@ import { defineComponent, computed } from "vue"
 import { useRouter } from "vue-router"
 import { useStore } from "@/store"
 import avatarUrl from "@/assets/img/avatar.jpg"
+import { changeFirstMenu } from "@/utils/map-menus"
 import { localCache } from "@/utils/cache"
 import {
   TOKEN_KEY,
@@ -43,6 +44,8 @@ export default defineComponent({
       localCache.removeItem(USER_MENUS_KEY)
       // 清空store数据
       store.dispatch("clearStoreDataAction")
+      // 清空第一个菜单
+      changeFirstMenu()
     }
     return {
       name,

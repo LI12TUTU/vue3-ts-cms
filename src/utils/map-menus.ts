@@ -148,4 +148,8 @@ export function mapMenusToOptions(menuList: any[]) {
   return options
 }
 
+export function changeFirstMenu() {
+  firstMenu = null
+}
+
 export { firstMenu }

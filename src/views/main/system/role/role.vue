@@ -69,6 +69,7 @@ export default defineComponent({
 
     const elTreeRef = ref<InstanceType<typeof ElTree>>()
     const editCallback = (item: any) => {
+      // nextTick 等到elTreeRef绑定到对应的节点之后再回调这个函数
       nextTick(() => {
         const leafKeys = mapMenusToLeafKeys(item.menuList)
         elTreeRef.value?.setCheckedKeys(leafKeys, false)
